@@ -1,6 +1,7 @@
 /*!
  * Array 补丁 与 增强
- * 2017.04.12 u
+ * https://github.com/wusfen/pro.js
+ * 2017.04.20 u
  * 2016.04.01 c
  */
 (function() {
@@ -68,7 +69,12 @@
             return rs;
         },
         pageIndex: function(n) {
-            if (n) { this._pageIndex = n }
+            if (n) {
+                var count = this.pageCount();
+                n = n > count ? count : n;
+                n = n < 1 ? 1 : n;
+                this._pageIndex = n
+            }
             return this._pageIndex || 1
         },
         pageSize: function(n) {
@@ -76,7 +82,7 @@
             return this._pageSize || window.pageSize || 10
         },
         pageCount: function(n) {
-            return parseInt(this.length / (n || this.pageSize()))
+            return Math.ceil(this.length / (n || this.pageSize()))
         },
         count: function() {
             return this.length
@@ -90,14 +96,14 @@
             var findArr = [];
             for (var i = 0; i < this.length; i++) {
                 var obj = this[i];
-                var eq = true;
+                var eq = false;
 
                 if (!isNaN(+where)) { // Number
                     where = { id: where };
                 }
 
-                if (obj == where) {
-                    // eq
+                if (obj === where) {
+                    eq = true;
                 } else if (typeof where == 'string') {
                     with(obj) {
                         eq = eval(where);
@@ -106,10 +112,12 @@
                     if (!where(obj, i, this)) {
                         eq = false;
                     }
-                } else {
+                } else if (obj !== null && where !== null) {
+                    eq = true;
                     for (var key in where) {
                         if (obj[key] != where[key]) { // ==
                             eq = false;
+                            break;
                         }
                     }
                 }
