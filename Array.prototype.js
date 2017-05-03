@@ -1,7 +1,7 @@
 /*!
  * Array 补丁 与 增强
  * https://github.com/wusfen/pro.js
- * 2017.04.20 u
+ * 2017.04.26 u
  * 2016.04.01 c
  */
 (function() {
@@ -240,9 +240,11 @@
         orderBy: function(field, desc) {
             // number 'number' 'string' obj
             return this.sort(function(a, b) {
-                return field ?
-                    (!desc ? a[field] - b[field] : b[field] - a[field]) :
-                    (!desc ? a - b : b - a)
+                a = field ? a[field] : a;
+                b = field ? b[field] : b;
+                return desc ?
+                    (a < b ? 1 : (a == b ? 0 : -1)) :
+                    (a > b ? 1 : (a == b ? 0 : -1))
             });
         },
         shuffle: function() {

@@ -10,7 +10,7 @@
  * @return {String}
  */
 Date.prototype.format = function(format) {
-    format = format || 'yyyy-MM-dd HH:mm:ss E';
+    format = format || 'yyyy-MM-dd HH:mm:ss';
     var date = this;
     var map = {
         y: date.getFullYear(),
