@@ -1,4 +1,5 @@
 /*
+https://github.com/wusfen/pro.js
 修复 ios 系统不支持日期使用 "-" 的 bug
 */
 if (new Date('2017-05-05') == 'Invalid Date') {
