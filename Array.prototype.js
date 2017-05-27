@@ -1,7 +1,7 @@
 /*!
  * Array 补丁 与 增强
  * https://github.com/wusfen/pro.js
- * 2017.04.26 u
+ * 2017.05.16 u
  * 2016.04.01 c
  */
 (function() {
@@ -16,16 +16,17 @@
     var selectOne;
     var aprox = {
         // 循环
-        forEach: function(fn, contex) {
+        forEach: function(fn, thisArg) {
             for (var i = 0; i < this.length; i++) {
-                fn.call(contex, this[i], i, this);
+                fn.call(thisArg, this[i], i, this);
             }
             return this;
         },
-        map: function(fn) {
+        map: function(fn, thisArg) {
+            var self = this;
             var rs = [];
             this.each(function(item) {
-                rs.push(fn(item));
+                rs.push(fn.apply(thisArg || self, arguments));
             });
             return rs;
         },
@@ -136,6 +137,12 @@
             selectOne = 0;
             return obj;
         },
+        first: function() {
+            return this[0]
+        },
+        last: function() {
+            return this[this.length - 1]
+        },
         indexOf: function(obj) {
             for (var i = 0; i < this.length; i++) {
                 if (this[i] === obj) {
@@ -194,13 +201,17 @@
         // 删
         // 根据条件删除
         'delete': function(where) {
-            var findArr = this.select(where);
-            for (var i = 0; i < findArr.length; i++) {
-                for (var j = 0; j < this.length; j++) {
-                    if (findArr[i] == this[j]) {
-                        this.splice(j--, 1);
+            if (typeof where == 'object') {
+                var findArr = this.select(where);
+                for (var i = 0; i < findArr.length; i++) {
+                    for (var j = 0; j < this.length; j++) {
+                        if (findArr[i] == this[j]) {
+                            this.splice(j--, 1);
+                        }
                     }
                 }
+            } else {
+                this.remove(where)
             }
             return this;
         },
@@ -218,13 +229,14 @@
         },
         // 去重
         uniq: function(pk) {
-            for (var i = 0; i < this.length; i++) {
-                var item = this[i];
-                for (var j = 0; j < i; j++) {
-                    var pre = this[j];
-                    var eq = pk ? item[pk] == pre[pk] : item === pre;
+            var length = this.length;
+            for (var i = 0; i < length; i++) {
+                for (var j = i + 1; j < length; j++) {
+                    var eq = pk ?
+                        this[i][pk] == this[j][pk] :
+                        this[i] === this[j];
                     if (eq) {
-                        this.splice(i--, 1), i--, j--
+                        this.splice(j--, 1), length--
                     }
                 }
             }
@@ -236,8 +248,13 @@
             !this.contains(item, pk) && this.push(item);
             return this;
         },
-        // 其它
-        orderBy: function(field, desc) {
+        /**
+         * 排序
+         * @param  {[type]} field [description]
+         * @param  {[type]} desc  [description]
+         * @return {[type]}       [description]
+         */
+        order: function(field, desc) {
             // number 'number' 'string' obj
             return this.sort(function(a, b) {
                 a = field ? a[field] : a;
@@ -247,20 +264,111 @@
                     (a > b ? 1 : (a == b ? 0 : -1))
             });
         },
+        /**
+         * [
+         *     {name:'n1', value:1},
+         *     {name:'n1', value:2},
+         *     {name:'n2', value:3},
+         *     {name:'n2', value:4},
+         * ].group('name')
+         * 
+         * //=>
+         * {
+         *     n1: [
+         *         {name:'n1', value:1},
+         *         {name:'n1', value:2},
+         *     ],
+         *     n2: [
+         *         {name:'n2', value:3},
+         *         {name:'n2', value:4},
+         *     ]
+         * }
+         * 
+         * @param  {[type]} field [description]
+         * @return {[type]}       [description]
+         */
+        groupMap: function(field) {
+            var map = {};
+            for (var i = 0; i < this.length; i++) {
+                var item = this[i];
+                var value = item[field];
+                var arr = map[value] || (map[value] = []);
+                arr.push(item);
+            }
+            return map;
+        },
+        /**
+         * [
+         *     {name:'n1', value:1},
+         *     {name:'n1', value:2},
+         *     {name:'n2', value:3},
+         *     {name:'n2', value:4},
+         * ].group('name')
+         * 
+         * //=>
+         * [
+         *     {name:'n1', data:[
+         *         {name:'n1', value:1},
+         *         {name:'n1', value:2},
+         *     ]},
+         *     {name:'n2', data:[
+         *         {name:'n2', value:3},
+         *         {name:'n2', value:4},
+         *     ]},
+         * ]
+         * @param  {[type]} field [description]
+         * @return {[type]}       [description]
+         */
+        group: function(field) {
+            var groups = [];
+            var map = this.groupMap(field);
+            for (var key in map) {
+                var group = {};
+                group[field] = key;
+                group.data = map[key];
+                groups.push(group);
+            }
+            return groups;
+        },
+        /**
+         * [1,2,3].without(2) //=> [1,3]
+         * [1,2,3].without([1,3]) //=> [2]
+         * [{id:1},{id:2},{id:3}].without([{id:2}]) //=> [{id:1},{id:3}]
+         * @param  {*|Array} others - item or list
+         * @return {Array}        new array
+         */
+        without: function(others) {
+            others = others.push ? others : [others];
+            var arr = this.concat();
+            for (var i = 0; i < others.length; i++) {
+                var item = others[i];
+                arr.delete(item);
+            }
+            return arr
+        },
+        /**
+         * random sort
+         * @return {Array} this
+         */
         shuffle: function() {
             return this.sort(function(a, b) {
                 return Math.random() - .5
             })
         },
         toArray: function() {
-            return this;
+            return this
         },
+        /**
+         * new array
+         * @return {Array} 
+         */
         copy: function() {
-            return this.select()
+            return this.concat()
         },
-        // 不要写 toJSON。 JSON.stringify 会先调用对象的 toJSON
-        toJson: function() {
-            return JSON.stringify(this);
+        json: function() {
+            // JSON.stringify 会先调用对象的 toJSON
+            // toJSON(){stringify(this)} 会死循环
+            return JSON.stringify(this)
         }
     };
 
@@ -269,7 +377,8 @@
     aprox.each = aprox.forEach;
     aprox.has = aprox.contains;
     aprox.one = aprox.get;
-    aprox.order = aprox.orderBy;
+    aprox.orderBy = aprox.order;
+    aprox.groupBy = aprox.group;
 
     orExtend(Array.prototype, aprox);
 
