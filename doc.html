@@ -1,22 +1,1187 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-cn">
 
 <head>
-<meta charset="utf-8">
-    <title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="MobileOptimized" content="320">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="browsermode" content="application">
+    <meta name="x5-page-mode" content="app">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>proto.js</title>
+    <!-- <link rel="stylesheet" type="text/css" href="../wui/wui.css"> -->
+    <link rel="stylesheet" type="text/css" href="doc.css">
 </head>
 
-<body>
-    <script src="Object.x.js"></script>
-    <script src="Array.prototype.js"></script>
+<body class="theme-sublime">
+    <!-- sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h1>proto.js</h1>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="#"><span class="c-obj">Object</span></a>
+                <ul>
+                    <li><a href="#Object.getType"><span class="c-method">.getType</span> <span class="c-comment">//获取参数数据类型</span></a></li>
+                    <li><a href="#Object.isType"><span class="c-method">.isType</span> <span class="c-comment">//判断参数数据类型</span></a></li>
+                    <li><a href="#Object.assign"><span class="c-method">.assign</span> <span class="c-comment">//[es]</span></a></li>
+                    <li><a href="#Object.keys"><span class="c-method">.keys</span> <span class="c-comment">//[es]</span></a></li>
+                    <li><a href="#Object.values"><span class="c-method">.values</span> <span class="c-comment">//返回对象的值数组</span></a></li>
+                    <!-- // .isMatch //判断两个对象是否匹配 -->
+                </ul>
+            </li>
+            <li>
+                <a href="#"><span class="c-obj">Array</span></a>
+                <ul>
+                    <li><a href="#Array.range"><span class="c-method">.range</span> <span class="c-comment">//返回区间整数元素数组</span></a></li>
+                    <li>
+                        <a href="#"><span class="c-prototype">.prototype</span></a>
+                        <ul>
+                            <li><a href="#Array.prototype.forEach"><span class="c-method">.forEach</span> <span class="c-comment">//[es]</span></a></li>
+                            <li><a href="#Array.prototype.each"><span class="c-method">.each</span> <span class="c-comment">//.forEach return this</span></a></li>
+                            <li><a href="#Array.prototype.filter"><span class="c-method">.filter</span> <span class="c-comment">//[es]</span></a></li>
+                            <li><a href="#Array.prototype.map"><span class="c-method">.map</span> <span class="c-comment">//[es]</span></a></li>
+                            <li><a href="#Array.prototype.includes"><span class="c-method">.includes</span> <span class="c-comment">//[es]</span></a></li>
+                            <li><a href="#Array.prototype.indexOf"><span class="c-method">.indexOf</span> <span class="c-comment">//[es]</span></a></li>
+                            <li><a href="#Array.prototype.lastIndexOf"><span class="c-method">.lastIndexOf</span> <span class="c-comment">//[es]</span></a></li>
+                            <li><a href="#Array.prototype.select"><span class="c-method">.select</span> <span class="c-comment">//查找符合条件的元素返回数组</span></a></li>
+                            <li><a href="#Array.prototype.where"><span class="c-method">.where</span> <span class="c-comment">//.select</span></a></li>
+                            <li><a href="#Array.prototype.get"><span class="c-method">.get</span> <span class="c-comment">//查找符合条件的第一个元素，不存在返回false</span></a></li>
+                            <li><a href="#Array.prototype.update"><span class="c-method">.update</span> <span class="c-comment">//修改符合条件的元素</span></a></li>
+                            <li><a href="#Array.prototype.delete"><span class="c-method">.delete</span> <span class="c-comment">//删除符合条件的元素</span></a></li>
+                            <li><a href="#Array.prototype.del"><span class="c-method">.del</span> <span class="c-comment">//.delete</span></a></li>
+                            <li><a href="#Array.prototype.insert"><span class="c-method">.insert</span> <span class="c-comment">//插入一个元素</span></a></li>
+                            <li><a href="#Array.prototype.orderBy"><span class="c-method">.orderBy</span> <span class="c-comment">//按某字段排序</span></a></li>
+                            <li><a href="#Array.prototype.groupBy"><span class="c-method">.groupBy</span> <span class="c-comment">//按某字段分组</span></a></li>
+                            <li><a href="#Array.prototype.groupCount"><span class="c-method">.groupCount</span> <span class="c-comment">//按某字段分组，有多少组</span></a></li>
+                            <li><a href="#Array.prototype.fields"><span class="c-method">.fields</span> <span class="c-comment">//返回所有字段的数组</span></a></li>
+                            <li><a href="#Array.prototype.column"><span class="c-method">.column</span> <span class="c-comment">//返回某一列</span></a></li>
+                            <li><a href="#Array.prototype.col"><span class="c-method">.col</span> <span class="c-comment">//.column</span></a></li>
+                            <li><a href="#Array.prototype.limit"><span class="c-method">.limit</span> <span class="c-comment">//返回start开始n个元素</span></a></li>
+                            <li><a href="#Array.prototype.top"><span class="c-method">.top</span> <span class="c-comment">//前n个元素</span></a></li>
+                            <li><a href="#Array.prototype.page"><span class="c-method">.page</span> <span class="c-comment">//分页</span></a></li>
+                            <li><a href="#Array.prototype.pageCount"><span class="c-method">.pageCount</span> <span class="c-comment">//页数</span></a></li>
+                            <li><a href="#Array.prototype.nth"><span class="c-method">.nth</span> <span class="c-comment">//第n个元素，负数从后面开始</span></a></li>
+                            <li><a href="#Array.prototype.first"><span class="c-method">.first</span> <span class="c-comment">//第一个元素</span></a></li>
+                            <li><a href="#Array.prototype.last"><span class="c-method">.last</span> <span class="c-comment">//最后一个元素</span></a></li>
+                            <li><a href="#Array.prototype.uniq"><span class="c-method">.uniq</span> <span class="c-comment">//去重</span></a></li>
+                            <li><a href="#Array.prototype.has"><span class="c-method">.has</span> <span class="c-comment">//是否包含某元素</span></a></li>
+                            <li><a href="#Array.prototype.contains"><span class="c-method">.contains</span> <span class="c-comment">//.has</span></a></li>
+                            <li><a href="#Array.prototype.eq"><span class="c-method">.eq</span> <span class="c-comment">//两个数组是否相等</span></a></li>
+                            <li><a href="#Array.prototype.add"><span class="c-method">.add</span> <span class="c-comment">//添加元素</span></a></li>
+                            <li><a href="#Array.prototype.ensure"><span class="c-method">.ensure</span> <span class="c-comment">//加入元素，已存在不添加</span></a></li>
+                            <li><a href="#Array.prototype.union"><span class="c-method">.union</span> <span class="c-comment">//并集</span></a></li>
+                            <li><a href="#Array.prototype.same"><span class="c-method">.same</span> <span class="c-comment">//交集</span></a></li>
+                            <li><a href="#Array.prototype.xor"><span class="c-method">.xor</span> <span class="c-comment">//两个集合不同部分</span></a></li>
+                            <li><a href="#Array.prototype.remove"><span class="c-method">.remove</span> <span class="c-comment">//差集或删除元素</span></a></li>
+                            <li><a href="#Array.prototype.difference"><span class="c-method">.difference</span> <span class="c-comment">//.remove</span></a></li>
+                            <li><a href="#Array.prototype.without"><span class="c-method">.without</span> <span class="c-comment">//.remove</span></a></li>
+                            <li><a href="#Array.prototype.removeIndex"><span class="c-method">.removeIndex</span> <span class="c-comment">//按下标删除元素</span></a></li>
+                            <li><a href="#Array.prototype.empty"><span class="c-method">.empty</span> <span class="c-comment">//清空</span></a></li>
+                            <li><a href="#Array.prototype.min"><span class="c-method">.min</span> <span class="c-comment">//数组中元素最小的一个</span></a></li>
+                            <li><a href="#Array.prototype.max"><span class="c-method">.max</span> <span class="c-comment">//数组中元素最大的一个</span></a></li>
+                            <li><a href="#Array.prototype.sum"><span class="c-method">.sum</span> <span class="c-comment">//数组中元素数值总和</span></a></li>
+                            <li><a href="#Array.prototype.avg"><span class="c-method">.avg</span> <span class="c-comment">//数组中元素平均值</span></a></li>
+                            <li><a href="#Array.prototype.mean"><span class="c-method">.mean</span> <span class="c-comment">//.avg</span></a></li>
+                            <li><a href="#Array.prototype.copy"><span class="c-method">.copy</span> <span class="c-comment">//复制</span></a></li>
+                            <li><a href="#Array.prototype.shuffle"><span class="c-method">.shuffle</span> <span class="c-comment">//乱序</span></a></li>
+                            <li><a href="#Array.prototype.random"><span class="c-method">.random</span> <span class="c-comment">//随机返回其中一个</span></a></li>
+                            <li><a href="#Array.prototype.toJson"><span class="c-method">.toJson</span> <span class="c-comment">//转json</span></a></li>
+                            <li><a href="#Array.prototype.toMap"><span class="c-method">.toMap</span> <span class="c-comment">//以元素的某字段的值转为map的key</span></a></li>
+                            <li><a href="#Array.prototype.key"><span class="c-method">.key</span></a></li>
+                            <li><a href="#Array.prototype.__noforin__"><span class="c-method">.__noforin__</span> <span class="c-comment">//用于警告勿用'for in'遍历数组</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><span class="c-obj">Date</span></a>
+                <ul>
+                    <li><a href="#"><span class="c-method">.today</span> <span class="c-comment">//返回今天0点的日期</span></a></li>
+                    <li><a href="#"><span class="c-method">.yesterday</span> <span class="c-comment">//返回昨天0点的日期</span></a></li>
+                    <li><a href="#"><span class="c-method">.tomorrow</span> <span class="c-comment">//返回明天0点的日期</span></a></li>
+                    <li>
+                        <a href="#"><span class="c-prototype">.prototype</span></a>
+                        <ul>
+                            <li><a href="#"><span class="c-method">.format</span> <span class="c-comment">//日期格式化</span></a></li>
+                            <li><a href="#"><span class="c-method">.diff</span> <span class="c-comment">//两个日期的差值格式化</span></a></li>
+                            <li><a href="#"><span class="c-method">.addFullYear</span> <span class="c-comment">//加减n年</span></a></li>
+                            <li><a href="#"><span class="c-method">.addMonth</span> <span class="c-comment">//加减n个月</span></a></li>
+                            <li><a href="#"><span class="c-method">.addDate</span> <span class="c-comment">//加减n天</span></a></li>
+                            <li><a href="#"><span class="c-method">.addHours</span> <span class="c-comment">//加减n小时</span></a></li>
+                            <li><a href="#"><span class="c-method">.addMinutes</span> <span class="c-comment">//加减n分钟</span></a></li>
+                            <li><a href="#"><span class="c-method">.addSeconds</span> <span class="c-comment">//加减n秒</span></a></li>
+                            <li><a href="#"><span class="c-method">.addMilliseconds</span> <span class="c-comment">//加减n毫秒</span></a></li>
+                            <li><a href="#"><span class="c-method">.addTime</span> <span class="c-comment">//获取或设置毫秒</span></a></li>
+                            <li><a href="#"><span class="c-method">.fullYear</span> <span class="c-comment">//获取或设置年</span></a></li>
+                            <li><a href="#"><span class="c-method">.month</span> <span class="c-comment">//获取或设置月</span></a></li>
+                            <li><a href="#"><span class="c-method">.date</span> <span class="c-comment">//获取或设置天</span></a></li>
+                            <li><a href="#"><span class="c-method">.hours</span> <span class="c-comment">//获取或设置小时</span></a></li>
+                            <li><a href="#"><span class="c-method">.minutes</span> <span class="c-comment">//获取或设置分钟</span></a></li>
+                            <li><a href="#"><span class="c-method">.seconds</span> <span class="c-comment">//获取或设置秒</span></a></li>
+                            <li><a href="#"><span class="c-method">.milliseconds</span> <span class="c-comment">//获取或设置毫秒</span></a></li>
+                            <li><a href="#"><span class="c-method">.time</span> <span class="c-comment">//获取或设置毫秒</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><span class="c-obj">Number</span></a>
+                <ul>
+                    <li><a href="#"><span class="c-method">.random</span> <span class="c-comment">//随机返回某区间的一个数字</span></a></li>
+                    <li>
+                        <a href="#"><span class="c-prototype">.prototype</span></a>
+                        <ul>
+                            <li><a href="#"><span class="c-method">.add</span> <span class="c-comment">//加，修复小数运算精度问题</span></a></li>
+                            <li><a href="#"><span class="c-method">.subtrack</span> <span class="c-comment">//减，修复小数运算精度问题</span></a></li>
+                            <li><a href="#"><span class="c-method">.multiply</span> <span class="c-comment">// 乘，修复小数运算精度问题</span></a></li>
+                            <li><a href="#"><span class="c-method">.divide</span> <span class="c-comment">//除，修复小数运算精度问题</span></a></li>
+                            <li><a href="#"><span class="c-method">['+']</span> <span class="c-comment">//.add</span></a></li>
+                            <li><a href="#"><span class="c-method">['-']</span> <span class="c-comment">//.subtrack</span></a></li>
+                            <li><a href="#"><span class="c-method">['*']</span> <span class="c-comment">//.multiply</span></a></li>
+                            <li><a href="#"><span class="c-method">['/']</span> <span class="c-comment">//.divide</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><span class="c-obj">String</span></a>
+                <ul>
+                    <li><a href="#"><span class="c-method">.trim</span> <span class="c-comment">// --?</span></a></li>
+                    <li><a href="#"><span class="c-method">.tpl</span></a></li>
+                    <li>
+                        <a href="#"><span class="c-prototype">.prototype</span></a>
+                        <ul>
+                            <li><a href="#"><span class="c-method">.trim</span> <span class="c-comment">//[es]</span></a></li>
+                            <li><a href="#"><span class="c-method">.toCamelCase</span> <span class="c-comment">//转驼峰命名</span></a></li>
+                            <li><a href="#"><span class="c-method">.toPascalCase</span> <span class="c-comment">//转帕斯卡命名</span></a></li>
+                            <li><a href="#"><span class="c-method">.toUnderscoreCase</span> <span class="c-comment">//转下划线命名</span></a></li>
+                            <li><a href="#"><span class="c-method">.toKebabCase</span> <span class="c-comment">//转中划线命名</span></a></li>
+                            <li><a href="#"><span class="c-method">.toString</span> <span class="c-comment">//转字符串</span></a></li>
+                            <li><a href="#"><span class="c-method">.toBoolean</span> <span class="c-comment">//转布尔</span></a></li>
+                            <li><a href="#"><span class="c-method">.toArray</span> <span class="c-comment">//转数组</span></a></li>
+                            <li><a href="#"><span class="c-method">.toDate</span> <span class="c-comment">//转日期</span></a></li>
+                            <li><a href="#"><span class="c-method">.toNumber</span> <span class="c-comment">//转数字</span></a></li>
+                            <li><a href="#"><span class="c-method">.parseInt</span> <span class="c-comment">//取整</span></a></li>
+                            <li><a href="#"><span class="c-method">.toInt</span> <span class="c-comment">//.parseInt</span></a></li>
+                            <li><a href="#"><span class="c-method">.toJson</span> <span class="c-comment">//转json</span></a></li>
+                            <li><a href="#"><span class="c-method">.toCsv</span> <span class="c-comment">//转csv</span></a></li>
+                            <li><a href="#"><span class="c-method">.csv2json</span> <span class="c-comment">//csv转json</span></a></li>
+                            <li><a href="#"><span class="c-method">.json2csv</span> <span class="c-comment">//json转csv</span></a></li>
+                            <li><a href="#"><span class="c-method">.tpl</span> <span class="c-comment">//模板引擎</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><span class="c-obj">Boolean</span></a>
+                <ul>
+                    <li>
+                        <a href="#"><span class="c-prototype">.prototype</span></a>
+                        <ul>
+                            <li><a href="#"><span class="c-method">.toString</span> <span class="c-comment">//转字符串</span></a></li>
+                            <li><a href="#"><span class="c-method">.toBoolean</span> <span class="c-comment">//转布尔</span></a></li>
+                            <li><a href="#"><span class="c-method">.toArray</span> <span class="c-comment">//转数组</span></a></li>
+                            <li><a href="#"><span class="c-method">.toDate</span> <span class="c-comment">//转日期</span></a></li>
+                            <li><a href="#"><span class="c-method">.toNumber</span> <span class="c-comment">//转数字</span></a></li>
+                            <li><a href="#"><span class="c-method">.parseInt</span> <span class="c-comment">//取整</span></a></li>
+                            <li><a href="#"><span class="c-method">.toInt</span> <span class="c-comment">//.parseInt</span></a></li>
+                            <li><a href="#"><span class="c-method">.toJson</span> <span class="c-comment">//转json</span></a></li>
+                            <li><a href="#"><span class="c-method">.toCsv</span> <span class="c-comment">//转csv</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><span class="c-obj">Function</span></a>
+                <ul>
+                    <li>
+                        <a href="#"><span class="c-prototype">.prototype</span></a>
+                        <ul>
+                            <li><a href="#"><span class="c-method">.bind</span> <span class="c-comment">//[es]</span></a></li>
+                            <li><a href="#"><span class="c-method">.delay</span> <span class="c-comment">//延时执行</span></a></li>
+                            <li><a href="#"><span class="c-method">.debounce</span> <span class="c-comment">//防重复</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><span class="c-obj">RegExp</span></a>
+                <ul>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><span class="c-obj">Math</span></a>
+                <ul>
+                    <li><a href="#"><span class="c-method">.avg</span> <span class="c-comment">//平均</span></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><span class="c-obj">JSON</span></a>
+                <ul>
+                    <li><a href="#"><span class="c-method">.parse</span> <span class="c-comment">//[es]</span></a></li>
+                    <li><a href="#"><span class="c-method">.stringify</span> <span class="c-comment">//[es]</span></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><span class="c-obj">[*]</span> <span class="c-comment"></span></a>
+                <ul>
+                    <li><a href="#"><span class="c-method">.isString</span></a></li>
+                    <li><a href="#"><span class="c-method">.isNumber</span></a></li>
+                    <li><a href="#"><span class="c-method">.isInt</span></a></li>
+                    <li><a href="#"><span class="c-method">.isNaN</span></a></li>
+                    <li><a href="#"><span class="c-method">.isBoolean</span></a></li>
+                    <li><a href="#"><span class="c-method">.isObject</span></a></li>
+                    <li><a href="#"><span class="c-method">.isArray</span></a></li>
+                    <li><a href="#"><span class="c-method">.isArrayLike</span></a></li>
+                    <li><a href="#"><span class="c-method">.isDate</span></a></li>
+                    <li><a href="#"><span class="c-method">.isRegExp</span></a></li>
+                    <li><a href="#"><span class="c-method">.isFunction</span></a></li>
+                    <li><a href="#"><span class="c-method">.toString</span></a></li>
+                    <li><a href="#"><span class="c-method">.toNumber</span></a></li>
+                    <li><a href="#"><span class="c-method">.toInt</span></a></li>
+                    <li><a href="#"><span class="c-method">.parseInt</span></a></li>
+                    <li><a href="#"><span class="c-method">.toBoolean</span></a></li>
+                    <li><a href="#"><span class="c-method">.toObject</span></a></li>
+                    <li><a href="#"><span class="c-method">.toArray</span></a></li>
+                    <li><a href="#"><span class="c-method">.toDate</span></a></li>
+                    <li><a href="#"><span class="c-method">.toRegExp</span></a></li>
+                    <li><a href="#"><span class="c-method">.toFunction</span></a></li>
+                    <li>
+                        <a href="#"><span class="c-prototype">.prototype</span></a>
+                        <ul>
+                            <li><a href="#"><span class="c-method">.toString</span></a></li>
+                            <li><a href="#"><span class="c-method">.toNumber</span></a></li>
+                            <li><a href="#"><span class="c-method">.toInt</span></a></li>
+                            <li><a href="#"><span class="c-method">.toBoolean</span></a></li>
+                            <li><a href="#"><span class="c-method">.toObject</span></a></li>
+                            <li><a href="#"><span class="c-method">.toArray</span></a></li>
+                            <li><a href="#"><span class="c-method">.toDate</span></a></li>
+                            <li><a href="#"><span class="c-method">.toRegExp</span></a></li>
+                            <li><a href="#"><span class="c-method">.toFunction</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- main -->
+    <div class="layout-main">
+        <div class="container">
+            <h2 id="介绍">介绍</h2>
+            <p>
+                proto.js 是一个js增强库，提供许多实用的链式方法，使数据操作更加方便。
+                同时还提供了许多 polyfill ，如 array.forEach, array.map 等。
+            </p>
+            <div>
+                <p>
+                    日期运算与格式化：
+                </p>
+                <code>
+                    <pre>
+Date.today().addDate(-3).format('yyyy-MM-dd')
+                    </pre>
+                </code>
+                <p>
+                    数组CRUD，增insert, 查select, 改update, 删delete ：
+                </p>
+                <code>
+                    <pre>
+var list = [
+    {id:1, name:'wsf'}, {id:2, name:'wsf2'}, {id:3, name:'wsf'}
+]
+
+list.select({name:'wsf'})
+                    </pre>
+                </code>
+                <p>
+                    集合运算，并集union, 交集same, 异或集xor, 差集difference：
+                </p>
+                <code>
+                    <pre>
+[1,2,3,4].same([3,4,5,6])
+                    </pre>
+                </code>
+                <p>
+                    方便的分页 page, pageCount, limit, top：
+                </p>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5,6,7,8,9,10,11,12]
+
+list.page(2, 10)
+                    </pre>
+                </code>
+                <p>
+                    避免js小数运算精度不准的方法 add ['+'], subtrack ['-'], multiply ['*'], divide ['/']：
+                </p>
+                <code>
+                    <pre>
+0.1+0.2; //=> 0.30000000000000004
+
+(0.1)['+'](0.2) //=> 0.3
+                    </pre>
+                </code>
+                <p>
+                    链式类型转换 *.to*：
+                </p>
+                <code>
+                    <pre>
+'3.14159'.toNumber().toFixed(2).toNumber()
+                    </pre>
+                </code>
+                <p>
+                    避免IOS系统中 new Date('yyyy-MM-dd HH:mm:ss') 返回 Invalid Date 的方法（当有Hms时，IOS中不能用'-'，只能用'/'）：
+                </p>
+                <code>
+                    <pre>
+Date.toDate('2017-10-1 00:00:00')
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+'2017-10-1 00:00:00'.toDate()
+                    </pre>
+                </code>
+                <p>
+                    还有许多实用的方法。
+                </p>
+            </div>
+            <div>
+                <h2 id="Object.getType">Object.getType</h2>
+                <p>
+可返回以下类型：
+"undefined", "null", "string", "number", "boolean", "object", "array", "function", "date", "regexp"
+                </p>
+<!-- Object.getType(undefined) -->
+<!-- Object.getType(null) -->
+<!-- Object.getType('str') -->
+<!-- Object.getType(1) -->
+<!-- Object.getType(false) -->
+<!-- Object.getType({id:1}) -->
+<!-- Object.getType([1,2,3]) -->
+<!-- Object.getType(function(){}) -->
+<!-- Object.getType(new Date) -->
+                <code>
+                    <pre>
+Object.getType(/reg/)
+                    </pre>
+                </code>
+                </code>
+                <h2 id="Object.isType">Object.isType</h2>
+                <code>
+                    <pre>
+Object.isType('array', [])
+                    </pre>
+                </code>
+                <h2 id="Object.is[Type]">Object.is[Type]</h2>
+                <code>
+                    <pre>
+Object.isArray([])
+                    </pre>
+                </code>
+                <h2 id="Object.assign">Object.assign</h2>
+                <code>
+                    <pre>
+Object.assign({a:1, b:1}, {b:2, c:3})
+                    </pre>
+                </code>
+                <h2 id="Object.keys">Object.keys</h2>
+                <code>
+                    <pre>
+Object.keys({id:1, name:'wsf'})
+                    </pre>
+                </code>
+                <h2 id="Object.values">Object.values</h2>
+                <code>
+                    <pre>
+Object.values({id:1, name:'wsf'})
+                    </pre>
+                </code>
+                <h2 id="Array.range">Array.range</h2>
+                <code>
+                    <pre>
+Array.range(3, 10)
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.each">Array.prototype.each</h2>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5]
+
+list.each(function(item, i, list){
+    list[i] = i+':'+item
+})
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.select">Array.prototype.select</h2>
+                <code>
+                    <pre>
+var list = [
+    {id:1, name:'wsf'},
+    {id:2, name:'wsf2'},
+    {id:3, name:'wsf'},
+]
+
+list.select({name:'wsf'})
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.get">Array.prototype.get</h2>
+                <code>
+                    <pre>
+var list = [
+    {id:1, name:'wsf'},
+    {id:2, name:'wsf2'},
+]
+
+list.get({id:1})
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.get({id:4})
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.get({id:4}).name
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.update">Array.prototype.update</h2>
+                <code>
+                    <pre>
+var list = [
+    {id:1, name:'wsf'},
+    {id:2, name:'wsf2'},
+    {id:3, name:'wsf'},
+]
+
+list.update({id:3}, {name:'wsf3'})
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.update({name:'all'})
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.select({id:1}).update({name:'wsf'})
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.delete">Array.prototype.delete</h2>
+                <code>
+                    <pre>
+var list = [
+    {id:1, name:'wsf'},
+    {id:2, name:'wsf2'},
+    {id:3, name:'wsf'},
+]
+
+list.delete({name:'wsf'})
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+var list = [
+    {id:1, name:'wsf'},
+    {id:2, name:'wsf2'},
+    {id:3, name:'wsf'},
+]
+
+list.delete([{id:2}, {id:3}])
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.insert">Array.prototype.insert</h2>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5]
+
+list.insert(6)
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.insert(99, 1)
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.insert([7,8,9])
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.orderBy">Array.prototype.orderBy</h2>
+                <code>
+                    <pre>
+var list = [
+    {id:1},
+    {id:3},
+    {id:2},
+]
+
+list.orderBy('id')
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.orderBy('id', 'desc')
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+var list = [1,3,2,5,4]
+
+list.orderBy()
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.orderBy(null, 'desc')
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.groupBy">Array.prototype.groupBy</h2>
+                <code>
+                    <pre>
+var list = [
+    {id:1, country:'中国'},
+    {id:2, country:'中国'},
+    {id:3, country:'美国'},
+]
+
+list.groupBy('country')
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.groupCount">Array.prototype.groupCount</h2>
+                <code>
+                    <pre>
+var list = [
+    {id:1, country:'中国'},
+    {id:2, country:'中国'},
+    {id:3, country:'美国'},
+]
+
+list.groupCount('country')
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.fields">Array.prototype.fields</h2>
+                <code>
+                    <pre>
+var list = [
+    {id:1, country:'中国'},
+    {id:2, country:'中国'},
+    {id:3, country:'美国'},
+]
+
+list.fields()
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.column">Array.prototype.column</h2>
+                <code>
+                    <pre>
+var list = [
+    {id:1, country:'中国'},
+    {id:2, country:'中国'},
+    {id:3, country:'美国'},
+]
+
+list.column('id')
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.limit">Array.prototype.limit</h2>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5,6,7,8,9,10]
+
+list.limit(1,3)
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.top">Array.prototype.top</h2>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5,6,7,8,9,10]
+
+list.top(5)
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.page">Array.prototype.page</h2>
+                <code>
+                    <pre>
+var list = Array.range(1, 101)
+
+list.page(2, 20)
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.pageCount">Array.prototype.pageCount</h2>
+                <code>
+                    <pre>
+var list = Array.range(1, 101)
+
+list.pageCount(20)
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.nth">Array.prototype.nth</h2>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5,6,7,8,9,10]
+
+list.nth(0)
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5,6,7,8,9,10]
+
+list.nth(-1)
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.first">Array.prototype.first</h2>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5,6,7,8,9,10]
+
+list.first()
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.last">Array.prototype.last</h2>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5,6,7,8,9,10]
+
+list.last()
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.uniq">Array.prototype.uniq</h2>
+                <code>
+                    <pre>
+var list = [
+    1, 2, 3,
+    1, 2, 4,
+    {id:1, name:'wsf'},
+    {id:1, name:'wsf'},
+]
+
+list.uniq()
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.has">Array.prototype.has</h2>
+                <code>
+                    <pre>
+var list = [
+    1, 2, 3,
+    1, 2, 4,
+]
+
+list.has(2)
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+var list = [
+    {id:1, name:'wsf'},
+    {id:2, name:'wsf2'},
+    {id:3, name:'wsf'},
+]
+
+list.has({id:1, name:'wsf'})
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.has({id:1})
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.has({id:1, name:'xxx'})
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.has([{id:1}, {id:2}])
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.has([{id:2}, {id:4}])
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.add">Array.prototype.add</h2>
+                <code>
+                    <pre>
+[1,2,3].add(4)
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.eq">Array.prototype.eq</h2>
+                <code>
+                    <pre>
+[{id:1},{id:2}].eq(
+
+[{id:1},{id:2}]    )
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.ensure">Array.prototype.ensure</h2>
+                <code>
+                    <pre>
+var list = [
+    1, 2, 3,
+]
+
+list.ensure(4)
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.ensure([1, 5,6,7])
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+var list = [
+    {id:1, name:'wsf'},
+    {id:2, name:'wsf2'},
+]
+
+list.ensure([
+    {id:1, name:'wsf'},
+    {id:3, name:'wsf3'},
+])
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.same">Array.prototype.same</h2>
+                <code>
+                    <pre>
+var list = [
+    {id:1, name:'wsf'},
+    {id:2, name:'wsf2'},
+]
+
+list.same([
+    {id:1, name:'wsf'},
+    {id:3, name:'wsf3'},
+])
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.xor">Array.prototype.xor</h2>
+                <code>
+                    <pre>
+var list = [
+    {id:1, name:'wsf'},
+    {id:2, name:'wsf2'},
+]
+
+list.xor([
+    {id:1, name:'wsf'},
+    {id:3, name:'wsf3'},
+])
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.removeIndex">Array.prototype.removeIndex</h2>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5,6,7,8,9,10]
+
+list.removeIndex(2)
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.empty">Array.prototype.empty</h2>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5,6,7,8,9,10]
+
+list.empty()
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.min">Array.prototype.min</h2>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5,6,7,8,9,10]
+
+list.min()
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.max">Array.prototype.max</h2>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5,6,7,8,9,10]
+
+list.max()
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.avg">Array.prototype.avg</h2>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5,6,7,8,9,10]
+
+list.avg()
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.copy">Array.prototype.copy</h2>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5,6,7,8,9,10]
+
+list.copy()
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.shuffle">Array.prototype.shuffle</h2>
+                <code>
+                    <pre>
+var list = [1,2,3,4,5,6,7,8,9,10]
+
+list.shuffle()
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.random">Array.prototype.random</h2>
+                <code>
+                    <pre>
+Array.range(1, 11).random()
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.toMap">Array.prototype.toMap</h2>
+                <code>
+                    <pre>
+var list = [
+    {id:1, name:'wsf'},
+    {id:2, name:'wsf2'},
+]
+
+list.toMap('name')
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.toMap('name')['wsf']
+                    </pre>
+                </code>
+                <h2 id="Array.prototype.key">Array.prototype.key</h2>
+                <code>
+                    <pre>
+var list = [
+    {id:1, name:'wsf'},
+    {id:2, name:'wsf2'},
+]
+
+list.select({id:1}).key('name')
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+list.select({id:4}).key('name')
+                    </pre>
+                </code>
+                <h2 id="Date.today">Date.today</h2>
+                <code>
+                    <pre>
+Date.today()
+                    </pre>
+                </code>
+                <h2 id="Date.yesterday">Date.yesterday</h2>
+                <code>
+                    <pre>
+Date.yesterday()
+                    </pre>
+                </code>
+                <h2 id="Date.tomorrow">Date.tomorrow</h2>
+                <code>
+                    <pre>
+Date.tomorrow()
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.format">Date.prototype.format</h2>
+                <code>
+                    <pre>
+new Date().format('yyyy-MM-dd HH:mm:ss .SSS')
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.diff">Date.prototype.diff</h2>
+                <code>
+                    <pre>
+var nextYear = new Date().getFullYear()+1
+var date = new Date(nextYear+'/10/1')
+var now = new Date
+
+date.diff(now, 'd天H时') // 现在离明年国庆还有多久
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+var date1 = new Date('2017/10/1')
+var date2 = new Date('2017/10/21 11:22:33')
+
+date2.diff(date1, 'd天H时m分')
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+date2.diff(date1, 'd')
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.addFullYear">Date.prototype.addFullYear</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').addFullYear(-1)
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.addMonth">Date.prototype.addMonth</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').addMonth(1)
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.addDate">Date.prototype.addDate</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').addDate(1)
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.addHours">Date.prototype.addHours</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').addHours(1)
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.addMinutes">Date.prototype.addMinutes</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').addMinutes(1)
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.addSeconds">Date.prototype.addSeconds</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').addSeconds(1)
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.addMilliseconds">Date.prototype.addMilliseconds</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').addMilliseconds(1).format('yyyy-MM-dd HH:mm:ss.SSS')
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.fullyear">Date.prototype.fullyear</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').fullyear()
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+new Date('2017/10/10').fullyear(2018)
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.month">Date.prototype.month</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').month()
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+new Date('2017/10/10').month(1)
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.date">Date.prototype.date</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').date()
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+new Date('2017/10/10').date(1)
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.hours">Date.prototype.hours</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').hours()
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+new Date('2017/10/10').hours(1)
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.minutes">Date.prototype.minutes</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').minutes()
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+new Date('2017/10/10').minutes(1)
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.seconds">Date.prototype.seconds</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').seconds()
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+new Date('2017/10/10').seconds(1)
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.milliseconds">Date.prototype.milliseconds</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').milliseconds()
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+new Date('2017/10/10').milliseconds(1)
+                    </pre>
+                </code>
+                <h2 id="Date.prototype.time">Date.prototype.time</h2>
+                <code>
+                    <pre>
+new Date('2017/10/10').time()
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+new Date('2017/10/10').time(1)
+                    </pre>
+                </code>
+                <h2 id="Number.random">Number.random</h2>
+                <code>
+                    <pre>
+Number.random(1,5)
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+Number.random(1,5, true)
+                    </pre>
+                </code>
+                <h2 id="Number.prototype.add">Number.prototype.add</h2>
+                <code>
+                    <pre>
+0.1 + 0.2
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+(0.1).add(0.2)
+                    </pre>
+                </code>
+                <h2 id="Number.prototype.subtrack">Number.prototype.subtrack</h2>
+                <code>
+                    <pre>
+0.3 - 0.1
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+(0.3).subtrack(0.1)
+                    </pre>
+                </code>
+                <h2 id="Number.prototype.multiply">Number.prototype.multiply</h2>
+                <code>
+                    <pre>
+0.1 * 0.2
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+(0.1).multiply(0.2)
+                    </pre>
+                </code>
+                <h2 id="Number.prototype.divide">Number.prototype.divide</h2>
+                <code>
+                    <pre>
+0.3 / 0.1
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+(0.3).divide(0.1)
+                    </pre>
+                </code>
+                <h2 id="Number.prototype['+']">Number.prototype['+']</h2>
+                <code>
+                    <pre>
+0.1 + 0.2
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+(0.1)['+'](0.2)
+                    </pre>
+                </code>
+                <h2 id="Number.prototype['-']">Number.prototype['-']</h2>
+                <code>
+                    <pre>
+0.3 - 0.1
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+(0.3)['-'](0.1)
+                    </pre>
+                </code>
+                <h2 id="Number.prototype['*']">Number.prototype['*']</h2>
+                <code>
+                    <pre>
+0.1 * 0.2
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+(0.1)['*'](0.2)
+                    </pre>
+                </code>
+                <h2 id="Number.prototype['/']">Number.prototype['/']</h2>
+                <code>
+                    <pre>
+0.3 / 0.1
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+(0.3)['/'](0.1)
+                    </pre>
+                </code>
+            </div>
+        </div>
+    </div>
+    <script src="type.js"></script>
+    <script src="Object.js"></script>
+    <script src="Array.js"></script>
+    <script src="Date.js"></script>
+    <script src="Number.js"></script>
+    <script src="lib/wu.hightlight.js"></script>
+    <link rel="stylesheet" type="text/css" href="lib/wu.hightlight.css">
     <script>
-    list = []
-    for (var i = 0; i < 100; i++) {
-        list.push({
-            id: i,
-            name: String.fromCharCode(parseInt(Math.random() * (90 - 65) + 65))
-        })
-    }
+        var pres = document.querySelectorAll('code pre');
+        for (var i = 0; i < pres.length; i++) {
+            var pre = pres[i];
+            var code = pre.parentNode;
+            var codeNext = code.nextSibling;
+            var output = document.createElement('div');
+            code.parentNode.insertBefore(output, codeNext);
+            var js = pre.innerHTML;
+            var result = eval(js);
+            if (Object.isType('date', result)) {
+                result = '[Date] '+ result.format()
+            }
+            output.innerHTML = JSON.stringify(result, null, '  ');
+
+            wu.hightlight(pre, 'javascript')
+            wu.hightlight(output, 'javascript')
+        }
     </script>
 </body>
 

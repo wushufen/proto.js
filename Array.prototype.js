@@ -1,8 +1,8 @@
 /*!
  * Array 补丁 与 增强
  * https://github.com/wusfen/pro.js
- * 2017.05.16 u
  * 2016.04.01 c
+ * 2017.08.29 u
  */
 (function() {
     function orExtend(obj, obj2) {
@@ -50,11 +50,7 @@
         },
         // 分页
         limit: function(start, count) {
-            var rs = [];
-            for (var i = start; i < start + count; i++) {
-                rs.push(this[i])
-            }
-            return rs;
+            return this.slice(start, start + count);
         },
         page: function(pageIndex, pageSize) {
             pageSize = pageSize || this.pageSize();
@@ -69,17 +65,21 @@
             }
             return rs;
         },
-        pageIndex: function(n) {
-            if (n) {
+        pageIndex: function(index) {
+            if (index) {
                 var count = this.pageCount();
-                n = n > count ? count : n;
-                n = n < 1 ? 1 : n;
-                this._pageIndex = n
+                index = Math.min(index, count);
+                index = Math.max(1, index);
+                this._pageIndex = index;
+                return this
             }
             return this._pageIndex || 1
         },
         pageSize: function(n) {
-            if (n) { this._pageSize = n }
+            if (n) {
+                this._pageSize = n;
+                return this
+            }
             return this._pageSize || window.pageSize || 10
         },
         pageCount: function(n) {
@@ -110,8 +110,8 @@
                         eq = eval(where);
                     }
                 } else if (typeof where == 'function') {
-                    if (!where(obj, i, this)) {
-                        eq = false;
+                    if (where(obj, i, this)) {
+                        eq = true;
                     }
                 } else if (obj !== null && where !== null) {
                     eq = true;
@@ -169,7 +169,7 @@
                         item[key] = kvs[key]
                     }
                 }
-            })
+            });
             return this;
         },
         set: function(fiels) {
@@ -225,7 +225,7 @@
             return this;
         },
         removeIndex: function(i) {
-            return this.splice(i--, 1), this;
+            return this.splice(i, 1), this;
         },
         // 去重
         uniq: function(pk) {
@@ -270,7 +270,7 @@
          *     {name:'n1', value:2},
          *     {name:'n2', value:3},
          *     {name:'n2', value:4},
-         * ].group('name')
+         * ].groupMap('name')
          * 
          * //=>
          * {
@@ -358,6 +358,12 @@
         toArray: function() {
             return this
         },
+        max: function(field) {
+            return Math.max.apply(Math, field ? this.col(field) : this)
+        },
+        min: function(field) {
+            return Math.min.apply(Math, field ? this.col(field) : this)
+        },
         /**
          * new array
          * @return {Array} 
@@ -377,8 +383,11 @@
     aprox.each = aprox.forEach;
     aprox.has = aprox.contains;
     aprox.one = aprox.get;
+    aprox.del = aprox['delete'];
     aprox.orderBy = aprox.order;
     aprox.groupBy = aprox.group;
+    aprox.fields = aprox.ks;
+    aprox.col = aprox.vs;
 
     orExtend(Array.prototype, aprox);
 
