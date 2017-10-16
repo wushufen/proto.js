@@ -357,10 +357,30 @@
             return this.splice(0), this
         },
         max: function(field) {
-            return Math.max.apply(Math, field ? this.column(field) : this)
+            if (arguments.length) {
+                var max = this[0];
+                this.each(function (item) {
+                    if (item[field]>max[field]) {
+                        max = item;
+                    }
+                });
+                return max
+            }else{
+                return Math.max.apply(Math, field ? this.column(field) : this)
+            }
         },
         min: function(field) {
-            return Math.min.apply(Math, field ? this.column(field) : this)
+            if (arguments.length) {
+                var min = this[0];
+                this.each(function (item) {
+                    if (item[field]<min[field]) {
+                        min = item;
+                    }
+                });
+                return min
+            }else{
+                return Math.min.apply(Math, field ? this.column(field) : this)
+            }
         },
         sum: function(field) {
             var list = field ? this.column(field) : this;

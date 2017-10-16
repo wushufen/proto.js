@@ -85,6 +85,12 @@ Function.toFunction = function(str) {
 // Object.toObject, Array.toArray, ...
 // string.toNumber, string.toBoolean, ...
 (function() {
+    Object.isNull = function (obj) {
+        return Object.isType('null', obj)
+    };
+    Object.isUndefined = function (obj) {
+        return Object.isType('undefined', obj)
+    };
     var list = [String, Number, Boolean, Object, Array, Date, RegExp, Function];
     for (var i = 0; i < list.length; i++) {
         (function() {
