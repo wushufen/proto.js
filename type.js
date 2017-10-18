@@ -3,7 +3,13 @@ Object.getType = function(obj) {
 };
 
 Object.isType = function(type, obj) {
-    return type.toLowerCase() == Object.getType(obj)
+    type = type.toLowerCase();
+    _type = Object.getType(obj);
+    var eq = type == _type;
+    if (eq && type == 'date') {
+        eq = !isNaN(obj.getTime()) //无效日期false
+    }
+    return eq
 };
 
 String.toString = function(obj) {
@@ -84,11 +90,11 @@ Function.toFunction = function(str) {
 // Object.isObject, Array.isArray, ...
 // Object.toObject, Array.toArray, ...
 // string.toNumber, string.toBoolean, ...
-(function() {
-    Object.isNull = function (obj) {
+!(function() {
+    Object.isNull = function(obj) {
         return Object.isType('null', obj)
     };
-    Object.isUndefined = function (obj) {
+    Object.isUndefined = function(obj) {
         return Object.isType('undefined', obj)
     };
     var list = [String, Number, Boolean, Object, Array, Date, RegExp, Function];
@@ -96,14 +102,15 @@ Function.toFunction = function(str) {
         (function() {
             var Fn = list[i];
             var FnName = Fn.name;
-            // is
+            // *.is*
             if (!Fn['is' + FnName]) {
                 Fn['is' + FnName] = function(obj) {
                     return Object.isType(FnName, obj)
                 }
             }
+            // Object.is*
             Object['is' + FnName] = Fn['is' + FnName];
-            // prototype.to
+            // *.prototype.to
             for (var j = 0; j < list.length; j++) {
                 (function() {
                     var toFn = list[j];
@@ -116,13 +123,13 @@ Function.toFunction = function(str) {
                     }
                 })()
             }
-            // prototype.toInt
+            // *.prototype.toInt
             if (Fn != Object) {
                 Fn.prototype['toInt'] = Fn.prototype['parseInt'] = function() {
                     return Number.toInt(this)
                 }
             }
-            // prototype.isNaN
+            // *.prototype.isNaN
             if (Fn != Object) {
                 Fn.prototype['isNaN'] = function() {
                     return isNaN(this)

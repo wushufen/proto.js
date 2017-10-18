@@ -410,7 +410,17 @@ Object.values({id:1, name:'wsf'})
                 <h2 id="Array.range">Array.range</h2>
                 <code>
                     <pre>
+Array.range(3)
+                    </pre>
+                </code>
+                <code>
+                    <pre>
 Array.range(3, 10)
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+Array.range(3, 10, 3)
                     </pre>
                 </code>
                 <h2 id="Array.prototype.each">Array.prototype.each</h2>
@@ -448,6 +458,11 @@ list.get({id:1})
                 </code>
                 <code>
                     <pre>
+list.get({id:1}).name
+                    </pre>
+                </code>
+                <code>
+                    <pre>
 list.get({id:4})
                     </pre>
                 </code>
@@ -461,11 +476,10 @@ list.get({id:4}).name
                     <pre>
 var list = [
     {id:1, name:'wsf'},
-    {id:2, name:'wsf2'},
-    {id:3, name:'wsf'},
+    {id:2, name:'wsf'},
 ]
 
-list.update({id:3}, {name:'wsf3'})
+list.update({id:2}, {name:'wsf2'})
                     </pre>
                 </code>
                 <code>
@@ -475,7 +489,7 @@ list.update({name:'all'})
                 </code>
                 <code>
                     <pre>
-list.select({id:1}).update({name:'wsf'})
+list.select({id:1}).update({name:'new name'})
                     </pre>
                 </code>
                 <h2 id="Array.prototype.delete">Array.prototype.delete</h2>
@@ -503,9 +517,23 @@ list.delete([{id:2}, {id:3}])
                 </code>
                 <code>
                     <pre>
-var list = [0,1,2,'',null,false,[],{}]
+list.delete()
+                    </pre>
+                </code>
+                <code>
+                    <pre>
+var list = [
+    0, 1, 2, NaN,
+    true, false,
+    undefined, null,
+    '', '0', '1', 'NaN', 'true', 'null', 'undefined', 'string', [],
+    [0, 1, 2],
+    {},
+    { id: 1, name: 'wsf' },
+    { id: 2, name: 'wsf2' },
+];
 
-list.delete(null)
+list.delete(0, NaN, false, undefined, null, '', [], {})
                     </pre>
                 </code>
                 <h2 id="Array.prototype.insert">Array.prototype.insert</h2>
@@ -530,9 +558,9 @@ list.insert([7,8,9])
                 <code>
                     <pre>
 var list = [
-    {id:1},
-    {id:3},
     {id:2},
+    {id:'11'},
+    {id:1},
 ]
 
 list.orderBy('id')
@@ -695,7 +723,6 @@ list.has(2)
 var list = [
     {id:1, name:'wsf'},
     {id:2, name:'wsf2'},
-    {id:3, name:'wsf'},
 ]
 
 list.has({id:1, name:'wsf'})
@@ -898,7 +925,7 @@ list.shuffle()
                 <h2 id="Array.prototype.random">Array.prototype.random</h2>
                 <code>
                     <pre>
-Array.range(1, 11).random()
+['一等奖', '二等奖', '三等奖'].random()
                     </pre>
                 </code>
                 <h2 id="Array.prototype.toMap">Array.prototype.toMap</h2>

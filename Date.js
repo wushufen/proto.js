@@ -5,16 +5,6 @@
  */
 
 /**
- * 判断所给参数是否合法日期
- * 
- * @param  {*}  date 预期日期
- * @return {Boolean}      是否合法日期
- */
-Date.isDate = function(date) {
-    return !!date && !!date.getTime && !isNaN(date.getTime())
-};
-
-/**
  * date format
  *
  * @example
