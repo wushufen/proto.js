@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="MobileOptimized" content="320">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="browsermode" content="application">
+    <meta name="x5-page-mode" content="app">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="wu.hightlight.css">
+    <style type="text/css">
+    /*body{margin: 0}*/
+    
+    .container {
+        width: 960px;
+        max-width: 100%;
+        margin: auto
+    }
+    </style>
+</head>
+
+<body>
+    <code><code>code</code></code>
+    <div class="container">
+        <!-- js -->
+        <pre id="showUse" class="wu-hightlight theme-sublime">
+            
+        </pre>
+        <!-- html -->
+        <pre id="showHtml" class="wu-hightlight theme-sublime" contenteditablex>
+<div>
+    <form class="horizontal" method="POST" action="">
+        <div class="form-group">
+            <label class="label">用户名</label>
+            <input class="input" type="text" name="" />
+            <p class="tip">请输入用户名</p>
+        </div>
+        <div class="form-group">
+            <label class="label">密码</label>
+            <input class="input" type="password" name="" />
+            <p class="tip">请输入密码</p>
+        </div>
+        <div class="form-group">
+            <div class="controls">
+                <a class="float-right" href="">忘记密码?</a>
+                <label>
+                    <input type="checkbox" name="" />
+                    记住我
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="button primary">登录</button>
+        </div>
+    </form>
+</div>
+        </pre>
+        <!-- css -->
+        <pre><code lang="css">
+.wu-hightlight{
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    padding: 0.75em 1em;
+    background: #FFFFFF;
+    color: #333;
+    line-height: 1.5;
+    font-size: 12px;
+    /* display: block; */   
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+.indent{display: inline-block; width: 4.5ex;}
+/*base color*/
+.wu-hightlight{background: #FFFFFF; color: #333;}
+div{abc: 1px}
+div, .class{color:#333}
+div,
+.class{color:#333}
+.class .class{color:#333}
+div.class{color:#fff}
+        </code></pre>
+        <!-- js test -->
+        <pre><code>
+123
+3.14
+    .53
+ .53
+5.
+-2
+s1
+s2.a
+3if
+if3
+if
+word = 123
+var op = 123.4 / 56 / 7 * 8 + 9 - 10
+true false
+/
+
+//
+
+//comment
+
+/reg/
+
+/reg\/reg"reg'reg/
+
+/**/
+
+/*comment*/
+
+/*
+comment
+*/
+
+'string'
+
+"string"; str="string"
+
+'s"trin"g'
+
+"s'trin'g"
+
+"s\"tr"
+
+""
+xxx
+"
+s
+tr
+"
+
+`
+s\n
+tr
+awt\tfa
+we'
+'fa
+w"eg
+aw"
+e\"g
+`
+
+qqabc
+defxqqijf
+awffawqq
+--------
+qqabc
+defxqqijf
+awffawqq
+
+
+1, true, false, 0.5, new Date
+'', "", '"', "'", 'string', "stri  ng2", "str'ing3", 'str\'ing'
+aaa + _$b_$bbb
+cccc*eee/fff-ggg
+obj,
+obj.oo1
+obj2.oo2.ooo2
+obj[2]
+obj[ 2 + a ].ok
+obj[vvv] obj[vvv]
+obj[
+   vvv
+]
+obj[ vvv22 ]
+obj['ss1']
+obj[vvv].ooo3
+obj['ss2'].ooo3
+    </code></pre>
+    </div>
+    <script src="wu.hightlight.js"></script>
+    <script id="use" type="text/javascript">
+    // use
+    wu.hightlight(showHtml, 'html');
+    showUse.innerHTML = wu.hightlight(use, 'javascript');
+    </script>
+</body>
+
+</html>

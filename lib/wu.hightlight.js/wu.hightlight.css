@@ -1,0 +1,80 @@
+pre code{
+	display: block;
+	padding: 0.375em 1em;
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+code{
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	padding: 0.25em 1em;
+	background: #272822;
+	color: #fff;
+	line-height: 1.5;
+	font-size: 12px;
+	word-break: break-word;
+    border-radius: .25em;
+	box-shadow: 0px 2px 10px #666;
+    box-shadow: 0px 2px 10px rgba(39, 40, 34, .5);
+}
+code code{
+	background: transparent;
+	box-shadow: none;
+	padding: 0;
+}
+code span{
+	transition: 1.5s
+}
+
+/*defauld*/
+code{background: #fff;color:#333}
+code .indent{display: inline-block; width: 4.5ex;line-height: 1.5;height: 1.5em;vertical-align: text-top;white-space: nowrap;}
+/*js*/
+.js-indent{border-left: solid 1px #E0E0E0;}
+.js-comment{color: #969896;}
+.js-string{color: #183691;}
+.js-reg{color: #FF6B00;}
+.js-type{color: #0086b3;}
+.js-keyword{color: #a71d5d;}
+.js-function{color: #0086b3;}
+.js-number{color: #BD00F0;}
+.js-operator{color: #a71d5d;}
+/*css*/
+.css-comment{color: #969896;}
+.css-selecter{color: #AFF523;}
+.css-property{color: #09CCEF;}
+.css-number{color: #BD00F0;}
+.css-color{color: #ae81ff;}
+/*html*/
+.html-tag{color: #FF0061;}
+.html-attr{color: #AFF523;}
+.html-value{color: rgb(236, 236, 110);}
+
+
+
+
+/************theme**************/
+/*sublime*/
+code{background: #272822; color: #fff;}
+.js-indent{border-left: solid 1px #333;}
+.js-comment{color: slategray}
+.js-string{color: #E6DB74;}
+.js-reg{color: #fd971f;}
+.js-type{color: #66d9ef;}
+.js-keyword{color: #FF0061;line-height: 1;}
+.js-function{color: #66d9ef;}
+.js-number{color: #ae81ff;}
+.js-operator{color: #FF0061;}
+
+/*github*/
+/*
+code{background: #FFFFFF; color: #333;}
+.js-indent{border-left: solid 1px #E0E0E0;}
+.js-comment{color: #969896;}
+.js-string{color: #183691;}
+.js-reg{color: #FF6B00;}
+.js-type{color: #0086b3;}
+.js-keyword{color: #a71d5d;}
+.js-function{color: #0086b3;}
+.js-number{color: #BD00F0;}
+.js-operator{color: #a71d5d;}
+*/
