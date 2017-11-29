@@ -196,20 +196,17 @@ p{
 
 /* code */
 code{
-	padding: 0;
-	margin: 0;
+    margin: 0;
 }
-code pre{
-	font-family: inherit;
+pre{
+    white-space: normal;
+    border-radius: 3px 3px 0 0;
 }
-code pre{
-	background: #333;
-	color: #89D8FF;
-	padding: .5em 1em;
-	border-radius: 3px 3px 0 0;
+pre code{
+    border-radius: 3px 3px 0 0;
 }
-
-code + div{
+pre + code{
+    display: block;
 	padding: 1em 1em;
 	margin-bottom: 2em;
 	border-radius: 0 0 3px 3px;

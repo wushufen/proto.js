@@ -24,3 +24,10 @@ Object.values = function(obj) {
     }
     return values;
 };
+Object.isEmpty = function(obj) {
+    if (obj && typeof obj == 'object') {
+        return !Object.keys(obj).length
+    } else {
+        return !obj
+    }
+}

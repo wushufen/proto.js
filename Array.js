@@ -1,3 +1,6 @@
+/**
+ * wushufen
+ */
 !(function() {
 
     Array.range = function(start, end, step) {
@@ -85,47 +88,59 @@
     };
 
     // 'a<'.isMatch(/(.*?)(>|>=|<|<=|==|===)$/)
-    function isMatch(obj, condition, deep) {
+    function isMatch(obj, _obj, deep) {
         deep = deep || 0;
+        // console.log('deep', deep)
         if (deep > 10) {
-            // console.log('deep')
             return false;
         }
 
         // ===
-        if (obj === condition) {
+        if (obj === _obj) {
             // console.log('eq: ===')
             return true
         }
         // 0:'0', NaN:NaN, false:'false', null:'null'
-        if ((typeof obj != 'object' || obj === null) && (typeof condition != 'object' || condition === null)) {
-            return String(obj) === String(condition)
+        if ((typeof obj != 'object' || obj === null) && (typeof _obj != 'object' || _obj === null)) {
+            return String(obj) === String(_obj)
         }
         // [..] [..]
-        if (getType(obj) == 'array' && getType(condition) == 'array') {
+        if (getType(obj) == 'array' && getType(_obj) == 'array') {
             // console.log('eq: []')
-            if (obj.length != condition.length) {
+            if (obj.length != _obj.length) {
                 return false
             }
-            for (var i = 0, length = condition.length; i < length; i++) {
-                if (!isMatch(obj[i], condition[i], deep + 1)) {
+            for (var i = 0, length = _obj.length; i < length; i++) {
+                if (!isMatch(obj[i], _obj[i], deep + 1)) {
                     return false
                 }
             }
             return true
         }
-        // {} {}
-        if (getType(obj) == 'object' && getType(condition) == 'object') {
+        // {id:1,name:'wsf'} {id:1,age:18} 共同字段相等则视为相等
+        // > >= == === <= < 
+        // list.select('age>18')
+        // list.select('age>', 18)
+        // list.select({'age>': 18}) @@@
+        // list.select({age: '>18'})
+        // list.select({age: '>' + 18})
+        // list.select({age: ['>', 18]})
+        if (getType(obj) == 'object' && getType(_obj) == 'object') {
             // console.log('eq: {}')
-            if (Object.keys(obj).length && !Object.keys(condition).length) {
-                return false
+            if (!Object.keys(obj).length && !Object.keys(_obj).length) {
+                return true
             }
-            for (var key in condition) {
-                if (!isMatch(obj[key], condition[key], deep + 1)) {
-                    return false
+
+            var eq = false;
+            for (var key in _obj) {
+                if (key in obj) {
+                    eq = true;
+                    if (!isMatch(obj[key], _obj[key], deep + 1)) {
+                        return false
+                    }
                 }
             }
-            return true
+            return eq
         }
         return false
     }
@@ -153,7 +168,6 @@
             }
             return arr
         },
-        where: function(condition, one) {},
         get: function(condition) {
             return this.select(condition, true)[0] || false
         },
@@ -166,6 +180,41 @@
             }
             return -1
         },
+        has: function(args) {
+            var list = arguments;
+            if (arguments.length == 1 && args && args.length) {
+                list = args
+            }
+
+            var isFind = true;
+            for (var i = 0; i < list.length; i++) {
+                var item = list[i];
+                if (!this.select(item).length) {
+                    isFind = false;
+                    break
+                }
+            }
+            return isFind
+        },
+        insert: function(list, index) {
+            // todo 改成 insert(args...)
+            index = index === undefined ? this.length : index;
+            this.splice.apply(this, [index, 0].concat(list));
+            return this
+        },
+        insertIndex: function (index, args) {
+            // todo
+        },
+        ensure: function(list) {
+            list = Array.isArray(list) ? list : [list];
+            for (var i = 0; i < list.length; i++) {
+                var item = list[i];
+                if (!this.has(item)) {
+                    this.push(item)
+                }
+            }
+            return this
+        },
         update: function(condition, map) {
             if (!map) {
                 map = condition;
@@ -174,14 +223,23 @@
             for (var i = 0, length = this.length; i < length; i++) {
                 var item = this[i];
                 if (isAll || isMatch(item, condition)) {
-                    for (var key in map) {
-                        if (map.hasOwnProperty(key)) {
+                    if (getType(item) == 'object' && getType(map) == 'object') {
+                        for (var key in map) {
+                            if (!map.hasOwnProperty(key)) continue;
                             item[key] = map[key]
                         }
+                    } else {
+                        this[i] = map
                     }
                 }
             }
             return this
+        },
+        updateIndex: function (index, map) {
+            // todo
+        },
+        empty: function() {
+            return this.splice(0), this
         },
         remove: function(args) {
             if (arguments.length == 0) {
@@ -207,11 +265,6 @@
         },
         removeIndex: function(i) {
             return this.splice(i, 1), this
-        },
-        insert: function(list, index) {
-            index = index === undefined ? this.length : index;
-            this.splice.apply(this, [index, 0].concat(list));
-            return this
         },
         orderBy: function(field, desc) {
             // number 'number' 'string' obj
@@ -258,12 +311,6 @@
                 return item[field]
             })
         },
-        limit: function(start, count) {
-            return this.slice(start, start + count)
-        },
-        top: function(n) {
-            return this.slice(0, n)
-        },
         page: function(pageIndex, pageSize) {
             pageSize = pageSize || 10;
             var start = (pageIndex - 1) * pageSize;
@@ -278,6 +325,12 @@
         },
         pageCount: function(pageSize) {
             return Math.ceil(this.length / (pageSize || 10))
+        },
+        top: function(n) {
+            return this.slice(0, n)
+        },
+        limit: function(start, count) {
+            return this.slice(start, start + count)
         },
         nth: function(index) {
             return index >= 0 ? this[index] : this[this.length + index]
@@ -299,30 +352,8 @@
             }
             return this
         },
-        has: function(list) {
-            list = Array.isArray(list) ? list : [list];
-            var find = true;
-            for (var i = 0; i < list.length; i++) {
-                var item = list[i];
-                if (!this.select(item).length) {
-                    find = false;
-                    break
-                }
-            }
-            return find
-        },
         eq: function(list) {
             return this.length == list.length && this.has(list) && list.has(this)
-        },
-        ensure: function(list) {
-            list = Array.isArray(list) ? list : [list];
-            for (var i = 0; i < list.length; i++) {
-                var item = list[i];
-                if (!this.has(item)) {
-                    this.push(item)
-                }
-            }
-            return this
         },
         same: function(list) {
             var arr = [];
@@ -337,9 +368,6 @@
         xor: function(list) {
             return this.copy().remove(list)
                 .concat(list.copy().remove(this))
-        },
-        empty: function() {
-            return this.splice(0), this
         },
         max: function(field) {
             if (arguments.length) {
@@ -433,30 +461,30 @@
 })();
 
 
-var list = [
-    0, 1, 2, NaN,
-    true, false,
-    undefined, null,
-    '', '0', '1', 'NaN', 'true', 'null', 'undefined', 'string', [],
-    [0, 1, 2],
-    {},
-    { id: 1, name: 'wsf' },
-    { id: 2, name: 'wsf2' },
-];
+// var list = [
+//     0, 1, 2, NaN,
+//     true, false,
+//     undefined, null,
+//     '', '0', '1', 'NaN', 'true', 'null', 'undefined', 'string', [],
+//     [0, 1, 2],
+//     {},
+//     { id: 1, name: 'wsf' },
+//     { id: 2, name: 'wsf2' },
+// ];
 
-for (var i = 0; i < list.length; i++) {
-    var item = list[i];
-    for (var j = 0; j < list.length; j++) {
-        var _item = list[j];
-        // console.log(typeof item, item, _item, typeof _item, Object.isMatch(item, _item) ? '*********************** match' : '')
-    }
-}
+// for (var i = 0; i < list.length; i++) {
+//     var item = list[i];
+//     for (var j = 0; j < list.length; j++) {
+//         var _item = list[j];
+//         // console.log(typeof item, item, _item, typeof _item, Object.isMatch(item, _item) ? '*********************** match' : '')
+//     }
+// }
 
-console.log(
-    // list.remove([''])
-    list.remove()
-    // list.remove(0,1,2)
-    // Object.isMatch(0,0)
-)
+// console.log(
+//     // list.remove([''])
+//     list.remove()
+//     // list.remove(0,1,2)
+//     // Object.isMatch(0,0)
+// )
 
-// console.log([0,1,{id:1}].getIndex({id:1}))
+// // console.log([0,1,{id:1}].getIndex({id:1}))

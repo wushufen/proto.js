@@ -22,4 +22,4 @@ String.prototype.tpl = function(data) {
     return String.tpl(this, data)
 };
 
-console.log('a+b = {{ a+b }}'.tpl({a:3, b:4}))
+// console.log('a+b = {{ a+b }}'.tpl({a:3, b:4}))
