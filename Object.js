@@ -1,3 +1,9 @@
+/*
+ * c 2016.04.01
+ * u 2017.11.29
+ * wushufen: 404315887@qq.com
+ */
+
 Object.assign ? 0 : Object.assign = function(obj, objn) {
     for (var i = 1; i < arguments.length; i++) {
         var obj2 = arguments[i];

@@ -1,3 +1,9 @@
+/*
+ * c 2016.04.01
+ * u 2017.11.29
+ * wushufen: 404315887@qq.com
+ */
+
 String.trim = function(obj) {
     if (obj === null || obj === undefined) {
         return ''

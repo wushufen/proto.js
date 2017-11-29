@@ -1,8 +1,9 @@
-/**
- * c 20170101
- * u 20170713
- * @author wushufen
+/*
+ * c 2016.04.01
+ * u 2017.11.29
+ * wushufen: 404315887@qq.com
  */
+
 
 /**
  * date format

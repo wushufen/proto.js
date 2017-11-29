@@ -1,3 +1,9 @@
+/*
+ * c 2016.04.01
+ * u 2017.11.29
+ * wushufen: 404315887@qq.com
+ */
+
 Object.getType = function(obj) {
     return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
 };

@@ -1,6 +1,9 @@
-/**
- * @author wushufen
+/*
+ * c 2016.04.01
+ * u 2017.11.29
+ * wushufen: 404315887@qq.com
  */
+
 
 Number.random = function(start, end, float) {
     var n = Math.random() * (end - start + (float ? 0 : 1)) + start;
