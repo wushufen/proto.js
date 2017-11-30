@@ -80,8 +80,11 @@ js小数运算精度问题解决方案
 
 /*
 function test(a, p, b) {
-    Function(
-        "var a=#a,b=#b;console.log(a+'#p'+b+' //=> '+(a#pb));console.log('('+a+')[\\'#p\\']('+b+')'+' //=> '+(a)['#p'](b)+'\\n')"
+    Function(`
+        var a=#a,b=#b;
+        console.log(a+'#p'+b+' //=> '+(a#pb));
+        console.log('('+a+')[\\'#p\\']('+b+')'+' //=> '+(a)['#p'](b)+'\\n')
+        `
         .replace(/#a/g, a)
         .replace(/#p/g, p)
         .replace(/#b/g, b)
@@ -99,4 +102,5 @@ test(.282, '*', 100)
 test(220.2342, '-', 20.2323)
 */
 
-// console.log((0.5025*100).fixed())`
+// console.log((0.5025*100).fixed())
+// console.log((220.2342 - 20.2323).fixed())

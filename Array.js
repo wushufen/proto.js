@@ -30,6 +30,9 @@
             console.warn('勿用 for...in 遍历数组');
             console.trace()
             return '__noforin__'
+        },
+        set: function () {
+            
         }
     });
 
@@ -153,6 +156,38 @@
     // console.log(isMatch('str','str'))
     // console.log(isMatch('',[]))
 
+    // ([1]) => [1]
+    // ([1,2]) => [1,2]
+    // ([]) => [[]]
+    // (1) => [1]
+    // (1,2) => [1,2]
+    // () => []
+    function getArguments(list, start) {
+        start = start || 0
+        var first = list[start || 0]
+        if (list.length == start + 1 && getType(first) == 'array' && first.length) { // ([1,2])
+            return first
+        } else { // () (1) (1,2) ([])
+            var arr = [];
+            var li = list.length;
+            var ai;
+            while (ai = li - start) {
+                li--, ai--;
+                arr[ai] = list[li]
+            }
+            return arr
+        }
+    }
+    // console.log( getArguments(  [ [1] ]  ) ) //=> [1]
+    // console.log( getArguments(  [ [1,2] ]  ) ) //=> [1,2]
+    // console.log( getArguments(  [ [] ]  ) ) //=> [[]]
+    // console.log( getArguments(  [ 1 ]  ) ) //=> [1]
+    // console.log( getArguments(  [ 1,2 ]  ) ) //=> [1,2]
+    // console.log( getArguments(  [  ]  ) ) //=> []
+    // console.log(getArguments(['x', 1, 2], 1)) //=> [1,2]
+    // console.log(getArguments([-1, 1, 2], 1)) //=> [1,2]
+
+
     var extend = {
         each: function(fn, thisArg) {
             this.forEach.apply(this, arguments);
@@ -184,10 +219,7 @@
             return -1
         },
         has: function(args) {
-            var list = arguments;
-            if (arguments.length == 1 && args && args.length) {
-                list = args
-            }
+            var list = getArguments(arguments);
 
             var isFind = true;
             for (var i = 0; i < list.length; i++) {
@@ -199,14 +231,20 @@
             }
             return isFind
         },
-        insert: function(list, index) {
-            // todo 改成 insert(args...)
-            index = index === undefined ? this.length : index;
+        insert: function(args) {
+            var list = getArguments(arguments);
+            console.log(list)
+
+            return this.push.apply(this, list), this
+        },
+        insertIndex: function(index, args) {
+            var list = getArguments(arguments, 1);
+            if (index < 0) { // splice -1 代表倒数第1之前
+                index = this.realIndex(index) + 1
+            }
+
             this.splice.apply(this, [index, 0].concat(list));
             return this
-        },
-        insertIndex: function (index, args) {
-            // todo
         },
         ensure: function(list) {
             list = Array.isArray(list) ? list : [list];
@@ -238,21 +276,25 @@
             }
             return this
         },
-        updateIndex: function (index, map) {
-            // todo
-        },
-        empty: function() {
-            return this.splice(0), this
+        updateIndex: function(index, map) {
+            index = this.realIndex(index);
+            var item = this.nth(index);
+
+            if (getType(item) == 'object' && getType(map) == 'object') {
+                for (var key in map) {
+                    item[key] = map[key]
+                }
+            } else {
+                this[index] = map
+            }
+            return this
         },
         remove: function(args) {
             if (arguments.length == 0) {
                 return this.empty()
             }
 
-            var list = arguments;
-            if (arguments.length == 1 && args && args.length) {
-                list = args
-            }
+            var list = getArguments(arguments);
 
             for (var i = 0, length = this.length; i < length; i++) {
                 var item = this[i];
@@ -268,6 +310,9 @@
         },
         removeIndex: function(i) {
             return this.splice(i, 1), this
+        },
+        empty: function() {
+            return this.splice(0), this
         },
         orderBy: function(field, desc) {
             // number 'number' 'string' obj
@@ -335,6 +380,9 @@
         limit: function(start, count) {
             return this.slice(start, start + count)
         },
+        realIndex: function(index) {
+            return index >= 0 ? index : this.length + index
+        },
         nth: function(index) {
             return index >= 0 ? this[index] : this[this.length + index]
         },
@@ -343,6 +391,19 @@
         },
         last: function() {
             return this[this.length - 1]
+        },
+        index: function(index, value) {
+            if (index === null) {
+                return this.insert(getArguments(arguments, 1))
+            }
+            if (value === null) {
+                return this.removeIndex(index)
+            }
+            if (arguments.length == 1) {
+                return this.nth(index)
+            } else {
+                return this.updateIndex(index, value)
+            }
         },
         unique: function() {
             var length = this.length;
@@ -412,7 +473,10 @@
         avg: function(field) {
             return this.sum(field) / this.length
         },
-        copy: function() {
+        copy: function(isDeep, maxDeep) {
+            if (isDeep) {
+                return Object.copy(this, maxDeep)
+            }
             return this.concat()
         },
         shuffle: function() {
@@ -475,19 +539,23 @@
 //     { id: 2, name: 'wsf2' },
 // ];
 
+// isMatch test
 // for (var i = 0; i < list.length; i++) {
 //     var item = list[i];
 //     for (var j = 0; j < list.length; j++) {
 //         var _item = list[j];
-//         // console.log(typeof item, item, _item, typeof _item, Object.isMatch(item, _item) ? '*********************** match' : '')
+//         console.log(typeof item, item, _item, typeof _item, Object.isMatch(item, _item) ? '*********************** match' : '')
 //     }
 // }
 
+// list.splice(50,0,'xxoo')
 // console.log(
 //     // list.remove([''])
-//     list.remove()
+//     // list.remove()
 //     // list.remove(0,1,2)
-//     // Object.isMatch(0,0)
+//     // [1, 2, 3].insertIndex(-1, ['x', 'y', 'z'])
+//     // [1,2,3].realIndex(-1)
+//     list.index(null, 'x', 'y')
 // )
 
-// // console.log([0,1,{id:1}].getIndex({id:1}))
+// console.log([0,1,{id:1}].getIndex(1))

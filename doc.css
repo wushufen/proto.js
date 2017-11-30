@@ -183,7 +183,7 @@ h1 {
     font-family: cursive;
 }
 
-h2 {
+h2,h3 {
     font-weight: normal;
     margin: 1em 0;
     padding: .5em 0;
@@ -205,7 +205,10 @@ pre{
 pre code{
     border-radius: 3px 3px 0 0;
 }
-pre + code{
+pre + *{
+    margin: 0;
+}
+pre + * code{
     display: block;
 	padding: 1em 1em;
 	margin-bottom: 2em;

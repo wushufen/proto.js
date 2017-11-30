@@ -21,9 +21,11 @@ gulp.task('js', function() {
     var uglify = require('gulp-uglify');
     var concat = require('gulp-concat');
 
-    gulp.src('{Object,Array,Date,Function,String,Number,Boolean,type}.js')
+    gulp.src('{license,{Object,Array,Date,Function,String,Number,Boolean,type}.js}')
         .pipe(uglify({
-            preserveComments: 'license'
+            output: {
+                comments: /license/,
+            }
         }))
         .pipe(concat('proto.js'))
         .pipe(gulp.dest('dest'))

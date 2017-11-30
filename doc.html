@@ -286,17 +286,17 @@
                 同时还提供了许多 polyfill ，如 array.forEach, array.map 等。
             </p>
             <div>
-                <p>
+                <h3>
                     日期运算与格式化：
-                </p>
+                </h3>
                 <pre>
                     <code>
 Date.today().addDate(-3).format('yyyy-MM-dd')
                     </code>
                 </pre>
-                <p>
+                <h3>
                     数组CRUD，增insert, 查select, 改update, 删delete ：
-                </p>
+                </h3>
                 <pre>
                     <code>
 var list = [
@@ -306,17 +306,17 @@ var list = [
 list.select({name:'wsf'})
                     </code>
                 </pre>
-                <p>
+                <h3>
                     集合运算，并集union, 交集same, 异或集xor, 差集difference：
-                </p>
+                </h3>
                 <pre>
                     <code>
 [1,2,3,4].same([3,4,5,6])
                     </code>
                 </pre>
-                <p>
+                <h3>
                     方便的分页 page, pageCount, limit, top：
-                </p>
+                </h3>
                 <pre>
                     <code>
 var list = [1,2,3,4,5,6,7,8,9,10,11,12]
@@ -324,9 +324,9 @@ var list = [1,2,3,4,5,6,7,8,9,10,11,12]
 list.page(2, 10)
                     </code>
                 </pre>
-                <p>
+                <h3>
                     避免js小数运算精度不准的方法 add ['+'], subtrack ['-'], multiply ['*'], divide ['/']：
-                </p>
+                </h3>
                 <pre>
                     <code>
 0.1+0.2; //=> 0.30000000000000004
@@ -334,17 +334,17 @@ list.page(2, 10)
 (0.1)['+'](0.2) //=> 0.3
                     </code>
                 </pre>
-                <p>
+                <h3>
                     链式类型转换 *.to*：
-                </p>
+                </h3>
                 <pre>
                     <code>
 '3.14159'.toNumber().toFixed(2).toNumber()
                     </code>
                 </pre>
-                <p>
+                <h3>
                     避免IOS系统中 <code>new Date('yyyy-MM-dd HH:mm:ss')</code> 返回 <code>Invalid Date</code> 的方法（当有Hms时，IOS中不能用'-'，只能用'/'）：
-                </p>
+                </h3>
                 <pre>
                     <code>
 Date.toDate('2017-10-1 00:00:00')
@@ -355,9 +355,9 @@ Date.toDate('2017-10-1 00:00:00')
 '2017-10-1 00:00:00'.toDate()
                     </code>
                 </pre>
-                <p>
+                <h3>
                     还有许多实用的方法。
-                </p>
+                </h3>
             </div>
             <div>
                 <h2 id="Object.getType">Object.getType</h2>
@@ -374,21 +374,11 @@ Date.toDate('2017-10-1 00:00:00')
                     <code>"date"</code>
                     <code>"regexp"</code>
                 </p>
-<!-- Object.getType(undefined) -->
-<!-- Object.getType(null) -->
-<!-- Object.getType('str') -->
-<!-- Object.getType(1) -->
-<!-- Object.getType(false) -->
-<!-- Object.getType({id:1}) -->
-<!-- Object.getType([1,2,3]) -->
-<!-- Object.getType(function(){}) -->
-<!-- Object.getType(new Date) -->
                 <pre>
                     <code>
 Object.getType(/reg/)
                     </code>
                 </pre>
-                </code>
                 <h2 id="Object.isType">Object.isType</h2>
                 <pre>
                     <code>
@@ -1294,8 +1284,10 @@ Number.random(1,5, true)
             var codeEl = codeEls[i];
             var preEl = codeEl.parentNode;
             var preElNext = preEl.nextSibling;
+            var outputWp = document.createElement('p');
             var outputEl = document.createElement('code');
-            preEl.parentNode.insertBefore(outputEl, preElNext);
+            outputWp.appendChild(outputEl);
+            preEl.parentNode.insertBefore(outputWp, preElNext);
             var js = codeEl.innerHTML;
             var result = eval(js);
             if (Object.isType('date', result)) {

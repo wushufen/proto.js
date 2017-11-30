@@ -58,7 +58,7 @@ Object.toObject = function(obj) {
 };
 
 Array.toArray = function(list) {
-    if (list && list.length != undefined) {
+    if (list && 'length' in list) {
         var arr = [];
         var i = list.length;
         while (i--) {
