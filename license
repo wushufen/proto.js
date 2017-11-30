@@ -1,6 +1,9 @@
 /**
- * license
+ * https://github.com/wusfen/proto.js
  *
+ * proto.js 是一个js增强库，提供许多实用的链式方法，使数据操作更加方便
+ * 
+ * license
  * c 2016.04.01
  * u 2017.11.29
  * wushufen: 404315887@qq.com
