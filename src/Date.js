@@ -50,6 +50,12 @@
         return pattern ? this.format(pattern) : this._toString()
     }
 
+    function pad(number) {
+        if (number < 10) {
+            return '0' + number;
+        }
+        return number;
+    }
     prototype.toISOString = prototype.toISOString || function() {
         return this.getUTCFullYear() +
             '-' + pad(this.getUTCMonth() + 1) +
