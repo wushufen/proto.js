@@ -24,7 +24,7 @@
 
     function handler() {
         var href = location.href
-        var match = href.match(RegExp('(\\?|&)(.*?)=(.*?)(?=&|$)', 'g')) || []
+        var match = href.match(RegExp('(\\?|&)(.*?)=(.*?)(?=&|#|$)', 'g')) || []
         for (var i = 0; i < match.length; i++) {
             var k_v = match[i].slice(1).split('='),
                 key = k_v[0],
