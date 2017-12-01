@@ -3,6 +3,7 @@
  * u 2017.11.29
  * wushufen: 404315887@qq.com
  */
+
 (function(Object, prototype) {
 
     Object.assign = Object.assign || function(obj, objn) {

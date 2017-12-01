@@ -1,3 +1,9 @@
+/*
+ * c 2016.04.01
+ * u 2017.11.29
+ * wushufen: 404315887@qq.com
+ */
+
 (function(Function, prototype) {
 
     prototype.bind = prototype.bind || function(ctx) {
