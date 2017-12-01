@@ -233,7 +233,6 @@
         },
         insert: function(args) {
             var list = getArguments(arguments);
-            console.log(list)
 
             return this.push.apply(this, list), this
         },
