@@ -1,5 +1,7 @@
 /*
- * location.params.key
+ * url: http://domain.com/path?key=true
+ * 
+ * location.params.key //=> true
  * 
  * c 2016.04.01
  * u 2017.12.01
