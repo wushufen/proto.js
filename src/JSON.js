@@ -5,17 +5,25 @@
  */
 
 (function(global) {
+    // if (global.JSON) return
 
-    global.JSON = global.JSON || {
+    var getType = function(obj) {
+        return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
+    }
+
+    global.JSON = {
         parse: function(json) {
-            // 安全校验
-            // todo
+            // 安全校验，如在 "..." 外有 () = ，则可能有恶意执行代码
+            var left = String(json).replace(/"(\\.|.)*?"/g, '') // "str\"ing" --
+            if (left.match(/\(|=/)) {
+                throw 'parse match "(..)" or "="'
+            }
 
             return global.eval('(' + json + ')')
         },
         stringify: function(obj) {
             return (function loop(obj) {
-                var type = Object.getType(obj)
+                var type = getType(obj)
                 if (type == 'null' || type == 'number' || type == 'boolean') {
                     return String(obj)
                 }
@@ -49,19 +57,23 @@
 
 })(Function('return this')())
 
-/*
-require('./type.js')
 
-console.log(JSON.parse(JSON.stringify({
-    un: undefined,
-    nu: null,
-    s: 'string',
-    n: 1,
-    b: true,
-    o: { n: 1 },
-    a: [1, 2, 3],
-    f: function() {},
-    d: new Date,
-    r: /reg/,
-})))
+/*
+console.log(
+    // JSON.parse('{"x":alert()}'),
+    JSON.parse(
+        JSON.stringify({
+            un: undefined,
+            nu: null,
+            s: 'string',
+            n: 1,
+            b: true,
+            o: { n: 1 },
+            a: [1, 2, 3],
+            f: function() {},
+            d: new Date,
+            r: /reg/,
+        })
+    )
+)
 */
