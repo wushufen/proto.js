@@ -50,6 +50,18 @@
         return pattern ? this.format(pattern) : this._toString()
     }
 
+    /**
+     * 是否无效日期
+     * 
+     * @return {Boolean} [description]
+     */
+    prototype.isInvalidDate = function () {
+        return isNaN(this)
+    }
+
+    /**
+     * toISOString
+     */
     function pad(number) {
         if (number < 10) {
             return '0' + number;
