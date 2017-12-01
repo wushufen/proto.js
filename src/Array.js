@@ -472,9 +472,9 @@
         avg: function(field) {
             return this.sum(field) / this.length
         },
-        copy: function(isDeep, maxDeep) {
-            if (isDeep) {
-                return Object.copy(this, maxDeep)
+        copy: function(deep) {
+            if (deep) {
+                return Object.copy(this, deep)
             }
             return this.concat()
         },

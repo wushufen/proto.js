@@ -212,36 +212,40 @@ JSON
   .stringify
 
 //Type
-  .isString
-  .isNumber
-  .isInt
-  .isNaN
-  .isBoolean
   .isObject
   .isArray
-  .isArrayLike
   .isDate
   .isRegExp
   .isFunction
+  .isString
+  .isNumber
+  .isBoolean
 
-  .toString
-  .toNumber
-  .toInt
-  .parseInt
-  .toBoolean
+  .isNull
+  .isUndefined
+  
+  .isArrayLike
+  .isInt
+  .isNaN
+
   .toObject
   .toArray
   .toDate
   .toRegExp
   .toFunction
+  .toString
+  .toNumber
+  .toBoolean
+  .toInt
+  .parseInt
 
   .prototype
-    .toString
-    .toNumber
-    .toInt
-    .toBoolean
     .toObject
     .toArray
     .toDate
     .toRegExp
     .toFunction
+    .toString
+    .toNumber
+    .toBoolean
+    .toInt
