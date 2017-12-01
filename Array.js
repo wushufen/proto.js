@@ -4,7 +4,7 @@
  * wushufen: 404315887@qq.com
  */
 
-!(function() {
+(function(Array, prototype) {
 
     Array.range = function(start, end, step) {
         if (end == undefined) {
@@ -31,8 +31,8 @@
             console.trace()
             return '__noforin__'
         },
-        set: function () {
-            
+        set: function() {
+
         }
     });
 
@@ -84,8 +84,8 @@
     };
 
     for (var key in polyfill) {
-        // if (!Array.prototype[key]) {
-        Array.prototype[key] = polyfill[key]
+        // if (!prototype[key]) {
+        prototype[key] = polyfill[key]
         // }
     }
 
@@ -522,10 +522,10 @@
     extend.uniq = extend.unique;
 
     for (var key in extend) {
-        Array.prototype[key] = extend[key]
+        prototype[key] = extend[key]
     }
 
-})();
+})(Array, Array.prototype)
 
 
 // var list = [

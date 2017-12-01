@@ -4,35 +4,37 @@
  * wushufen: 404315887@qq.com
  */
 
+(function(Number, prototype) {
+    /*
+    js小数运算精度问题解决方案
 
-Number.random = function(start, end, float) {
-    var n = Math.random() * (end - start + (float ? 0 : 1)) + start;
-    return float ? n : parseInt(n)
-};
+    0.1+0.2 //=> 0.30000000000000004
+    (0.1)['+'](0.2) //=> 0.3
 
-/*
-js小数运算精度问题解决方案
+    0.3-0.1 //=> 0.19999999999999998
+    (0.3)['-'](0.1) //=> 0.2
 
-0.1+0.2 //=> 0.30000000000000004
-(0.1)['+'](0.2) //=> 0.3
+    0.1*0.2 //=> 0.020000000000000004
+    (0.1)['*'](0.2) //=> 0.02
 
-0.3-0.1 //=> 0.19999999999999998
-(0.3)['-'](0.1) //=> 0.2
+    0.3/0.1 //=> 2.9999999999999996
+    (0.3)['/'](0.1) //=> 3
 
-0.1*0.2 //=> 0.020000000000000004
-(0.1)['*'](0.2) //=> 0.02
+    0.5025*100 //=> 50.24999999999999
+    (0.5025)['*'](100) //=> 50.25
 
-0.3/0.1 //=> 2.9999999999999996
-(0.3)['/'](0.1) //=> 3
-
-0.5025*100 //=> 50.24999999999999
-(0.5025)['*'](100) //=> 50.25
-
-0.282*100 //=> 28.199999999999996
-(0.282)['*'](100) //=> 28.2
-
-*/
-!(function() {
+    0.282*100 //=> 28.199999999999996
+    (0.282)['*'](100) //=> 28.2
+    */
+    '+-*/'.replace(/./g, function($) { // each
+        prototype[$] = function(n) {
+            return fun(this, $, n)
+        }
+    })
+    prototype.add = prototype['+'];
+    prototype.subtrack = prototype['-'];
+    prototype.multiply = prototype['*'];
+    prototype.divide = prototype['/'];
 
     function fun(a, p, b) {
         var adl = (String(a).split('.')[1] || '').length;
@@ -56,27 +58,25 @@ js小数运算精度问题解决方案
         }
     }
 
-    var fn = Number.prototype;
 
-    // each
-    '+-*/'.replace(/./g, function($) {
-        fn[$] = function(n) {
-            return fun(this, $, n)
-        }
-    });
+    /*
+    js小数运算精度问题解决方案 2
 
-    fn.add = fn['+'];
-    fn.subtrack = fn['-'];
-    fn.multiply = fn['*'];
-    fn.divide = fn['/'];
-
-    // 0.5025*100 // => 50.24999999999999
-    // (0.5025*100).fixed() // => 50.25
-    fn.fixed = function(n) {
+    0.5025*100 // => 50.24999999999999
+    (0.5025*100).fixed() // => 50.25
+    */
+    prototype.fixed = function(n) {
         return +this.toFixed(n || 10)
     }
 
-})();
+
+    Number.random = function(start, end, float) {
+        var n = Math.random() * (end - start + (float ? 0 : 1)) + start;
+        return float ? n : parseInt(n)
+    }
+
+})(Number, Number.prototype)
+
 
 /*
 function test(a, p, b) {

@@ -4,105 +4,106 @@
  * wushufen: 404315887@qq.com
  */
 
-Object.getType = function(obj) {
-    return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
-};
+(function(String, Number, Boolean, Object, Array, Date, RegExp, Function, undefined) {
 
-Object.isType = function(type, obj) {
-    type = type.toLowerCase();
-    _type = Object.getType(obj);
-    var eq = type == _type;
-    if (eq && type == 'date') {
-        eq = !isNaN(obj.getTime()) //无效日期false
+    Object.getType = function(obj) {
+        return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
     }
-    return eq
-};
 
-String.toString = function(obj) {
-    return obj + ''
-};
-
-Number.toNumber = function(obj) {
-    var n = Number(obj);
-    n = isNaN(n) ? Number(String(obj).match(/\d+/)) : n;
-    n = isNaN(n) ? +obj : n;
-    return n
-};
-
-Number.toInt = function(obj) {
-    var n = parseInt(obj);
-    n = isNaN(n) ? +obj : n;
-    return isNaN(n) ? 0 : n
-};
-
-Number.isInt = function(obj) {
-    return typeof obj == 'number' && !String(obj).match(/\.|NaN|Infinity/)
-};
-
-Number.isNaN = function(obj) {
-    return typeof obj == 'number' && isNaN(obj)
-};
-
-Boolean.toBoolean = function(obj) {
-    if (obj == 'true') {
-        return true
-    }
-    if (obj == 'false') {
-        return false
-    }
-    return !!obj
-};
-
-Object.toObject = function(obj) {
-    return Object(obj)
-};
-
-Array.toArray = function(list) {
-    if (list && 'length' in list) {
-        var arr = [];
-        var i = list.length;
-        while (i--) {
-            arr[i] = list[i]
+    Object.isType = function(type, obj) {
+        type = type.toLowerCase();
+        _type = Object.getType(obj);
+        var eq = type == _type;
+        if (eq && type == 'date') {
+            eq = !isNaN(obj.getTime()) //无效日期false
         }
-        return arr
+        return eq
     }
-    return [list]
-};
 
-Array.isArrayLike = function(list) {
-    return 'length' in Object(list)
-};
-
-Date.toDate = function(str) {
-    str = String(str).replace(/-/g, '\/');
-    str = str.replace(/年|月/g, '\/').replace('日', ' '); // '2017年10月12日' -> '2017/10/12'
-    return new Date(str)
-};
-
-RegExp.toRegExp = function(obj) {
-    return RegExp(obj)
-};
-
-Function.toFunction = function(str) {
-    try {
-        return Function(str)
-    } catch (e) {
-        return function() {}
+    String.toString = function(obj) {
+        return obj + ''
     }
-};
+
+    Number.toNumber = function(obj) {
+        var n = Number(obj);
+        n = isNaN(n) ? Number(String(obj).match(/\d+/)) : n;
+        n = isNaN(n) ? +obj : n;
+        return n
+    }
+
+    Number.toInt = function(obj) {
+        var n = parseInt(obj);
+        n = isNaN(n) ? +obj : n;
+        return isNaN(n) ? 0 : n
+    }
+
+    Number.isInt = function(obj) {
+        return typeof obj == 'number' && !String(obj).match(/\.|NaN|Infinity/)
+    }
+
+    Number.isNaN = function(obj) {
+        return typeof obj == 'number' && isNaN(obj)
+    }
+
+    Boolean.toBoolean = function(obj) {
+        if (obj == 'true') {
+            return true
+        }
+        if (obj == 'false') {
+            return false
+        }
+        return !!obj
+    }
+
+    Object.toObject = function(obj) {
+        return Object(obj)
+    }
+
+    Array.toArray = function(list) {
+        if (list && 'length' in list) {
+            var arr = [];
+            var i = list.length;
+            while (i--) {
+                arr[i] = list[i]
+            }
+            return arr
+        }
+        return [list]
+    }
+
+    Array.isArrayLike = function(list) {
+        return 'length' in Object(list)
+    }
+
+    Date.toDate = function(str) {
+        str = String(str).replace(/-/g, '\/');
+        str = str.replace(/年|月/g, '\/').replace('日', ' '); // '2017年10月12日' -> '2017/10/12'
+        return new Date(str)
+    }
+
+    RegExp.toRegExp = function(obj) {
+        return RegExp(obj)
+    }
+
+    Function.toFunction = function(str) {
+        try {
+            return Function(str)
+        } catch (e) {
+            return function() {}
+        }
+    }
 
 
-// Object.is*
-// Object.isObject, Array.isArray, ...
-// Object.toObject, Array.toArray, ...
-// string.toNumber, string.toBoolean, ...
-!(function() {
+    // Object.is*
+    // Object.isObject, Array.isArray, ...
+    // Object.toObject, Array.toArray, ...
+    // string.toNumber, string.toBoolean, ...
     Object.isNull = function(obj) {
         return Object.isType('null', obj)
-    };
+    }
     Object.isUndefined = function(obj) {
         return Object.isType('undefined', obj)
-    };
+    }
     var list = [String, Number, Boolean, Object, Array, Date, RegExp, Function];
     for (var i = 0; i < list.length; i++) {
         (function() {
@@ -144,8 +145,8 @@ Function.toFunction = function(str) {
             }
         })()
     }
-})();
 
+})(String, Number, Boolean, Object, Array, Date, RegExp, Function)
 // console.log(Object.isArray([]))
 
 // console.log(new Date('0'))
