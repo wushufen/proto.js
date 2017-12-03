@@ -4,7 +4,7 @@
  * wushufen: 404315887@qq.com
  */
 
-(function(Date, prototype) {
+!(function(Date, prototype) {
     /**
      * date format
      *
@@ -55,28 +55,33 @@
      * 
      * @return {Boolean} [description]
      */
-    prototype.isInvalidDate = function () {
+    prototype.isInvalidDate = function() {
         return isNaN(this)
     }
 
     /**
      * toISOString
      */
-    function pad(number) {
-        if (number < 10) {
-            return '0' + number;
-        }
-        return number;
-    }
     prototype.toISOString = prototype.toISOString || function() {
         return this.getUTCFullYear() +
-            '-' + pad(this.getUTCMonth() + 1) +
-            '-' + pad(this.getUTCDate()) +
-            'T' + pad(this.getUTCHours()) +
-            ':' + pad(this.getUTCMinutes()) +
-            ':' + pad(this.getUTCSeconds()) +
+            '-' + p0(this.getUTCMonth() + 1) +
+            '-' + p0(this.getUTCDate()) +
+            'T' + p0(this.getUTCHours()) +
+            ':' + p0(this.getUTCMinutes()) +
+            ':' + p0(this.getUTCSeconds()) +
             '.' + (this.getUTCMilliseconds() / 1000).toFixed(3).slice(2, 5) +
             'Z';
+    }
+
+    function p0(number) {
+        return (number < 10 ? '0' : '') + number
+    }
+
+    /**
+     * toJSON
+     */
+    prototype.toJSON = prototype.toJSON || function() {
+        return this.toISOString()
     }
 
     /**

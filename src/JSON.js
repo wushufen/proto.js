@@ -4,12 +4,8 @@
  * wushufen: 404315887@qq.com
  */
 
-(function(global) {
-    if (global.JSON) return
-
-    var getType = function(obj) {
-        return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
-    }
+!(function(global) {
+    // if (global.JSON) return
 
     global.JSON = {
         parse: function(json) {
@@ -22,7 +18,7 @@
             return global.eval('(' + json + ')')
         },
         stringify: function(obj, replacer, space) {
-            if (getType(space) == 'number') {
+            if (typeof(space) == 'number') {
                 space = Array(space + 1).join(' ')
             }
             space = space ? space : ''
@@ -33,8 +29,8 @@
                     // return '...'
                 }
 
-                // 转换器
-                if (getType(replacer) == 'function') {
+                // 过滤转换器
+                if (typeof(replacer) == 'function') {
                     obj = replacer(key, obj)
                     if (obj === undefined) {
                         return
@@ -42,27 +38,25 @@
                 }
 
                 // 
-                var type = getType(obj)
-                if (obj && getType(obj.toJSON) == 'function') {
-                    return stringify(key, obj.toJSON(), deep + 1)
-                }
-                if (type == 'null' || type == 'number' || type == 'boolean') {
+                var type = typeof obj
+                if (obj === null || type == 'boolean') {
                     return String(obj)
                 }
+                if (type == 'number') {
+                    return isFinite(obj) ? String(obj) : 'null'
+                }
                 if (type == 'string') {
-                    return '"' + obj + '"'
+                    return '"' + obj.replace(/"/g, '\\"') + '"' // 转义
                 }
-                if (type == 'regexp') {
-                    return '{}'
-                }
-                if (type == 'date') {
-                    return '"' + obj.toISOString() + '"'
+
+                if (obj && typeof(obj.toJSON) == 'function') {
+                    return stringify(key, obj.toJSON(), deep + 1) // date.toJSON
                 }
 
                 var brSpacePop = space ? '\n' + Array(deep + 1).join(space) : '' // 2 换行缩进跳上一级
                 var brSpace = space ? brSpacePop + space : '' // 1 换行缩进
 
-                if (type == 'array') {
+                if (obj instanceof Array) {
                     var arr = []
                     for (var i = 0; i < obj.length; i++) {
                         var s = stringify(i, obj[i], deep + 1)
@@ -82,7 +76,7 @@
                     for (var key in obj) {
                         var s = stringify(key, obj[key], deep + 1)
                         // replacer [keys]
-                        if (getType(replacer) == 'array') {
+                        if (replacer instanceof Array) {
                             replacer.indexOf(key) != -1 && arr.push('"' + key + '":' + s)
                         } else {
                             s && arr.push('"' + key + '":' + s) // && 忽略
@@ -121,6 +115,6 @@ console.log(
         f: function() {},
         d: new Date,
         r: /reg/,
-    }, ['a'], 4)
+    }, null, 4)
     // )
 )*/

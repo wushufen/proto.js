@@ -4,7 +4,7 @@
  * wushufen: 404315887@qq.com
  */
 
-(function(Object, prototype) {
+!(function(Object, prototype) {
 
     Object.assign = Object.assign || function(obj, objn) {
         for (var i = 1; i < arguments.length; i++) {
@@ -32,35 +32,60 @@
         }
         return values
     }
-    Object.isEmpty = function(obj) {
-        if (obj && typeof obj == 'object') {
-            return !Object.keys(obj).length
-        } else {
-            return !obj
-        }
-    }
-    Object.copy = function(arg, maxDeep, deep) {
-        maxDeep = maxDeep || 10;
-        deep = deep || 0;
-        if (deep > maxDeep) {
-            return '...'
-        }
-        var type = Object.getType(arg);
-        if (type != 'object' && type != 'array') {
-            return arg
-        } else if (type == 'array') {
-            var arr = [];
-            for (var i = 0, length = arg.length; i < length; i++) {
-                arr[i] = Object.copy(arg[i], maxDeep, deep + 1)
+    Object.copy = function(obj, max) {
+        var count = 0;
+        return (function copy(parent, key, obj, depth) {
+            // console.log(count, parent, key)
+            // console.log(Array(depth+1).join('--'), key, typeof obj)
+            var type = typeof obj;
+
+            max = max || 10000;
+            if (count > max) {
+                // return '...'
+                // console.log(count, parent, key)
+                return obj
             }
-            return arr
-        } else if (type == 'object') {
-            var obj = {}
-            for (var key in arg) {
-                obj[key] = Object.copy(arg[key], maxDeep, deep + 1)
+
+            // todo 广度优先
+            if (obj === null || type !== 'object') {
+                count += 1;
+                return obj
+            } else if (obj instanceof Array) {
+                var _arr = [];
+                for (var i = 0, length = obj.length; i < length; i++) {
+                    var item = obj[i];
+                    var type = typeof item;
+                    if (obj === null || type !== 'object') {
+                        _arr[i] = copy(obj, i, item, depth+1)
+                    }
+                }
+                for (var i = 0, length = obj.length; i < length; i++) {
+                    var item = obj[i];
+                    var type = typeof item;
+                    if (obj !== null && type == 'object') {
+                        _arr[i] = copy(obj, i, item, depth+1)
+                    }
+                }
+                return _arr
+            } else if (type == 'object') {
+                var _obj = {}
+                for (var key in obj) {
+                    var item = obj[key];
+                    var type = typeof item;
+                    if (obj === null || type !== 'object') {
+                        _obj[key] = copy(obj, key, item, depth+1)
+                    }
+                }
+                for (var key in obj) {
+                    var item = obj[key];
+                    var type = typeof item;
+                    if (obj !== null && type == 'object') {
+                        _obj[key] = copy(obj, key, item, depth+1)
+                    }
+                }
+                return _obj
             }
-            return obj
-        }
+        })('root', '', obj, 0, 0)
     }
-    
+
 })(Object, Object.prototype)

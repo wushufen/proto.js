@@ -4,7 +4,7 @@
  * wushufen: 404315887@qq.com
  */
 
-(function(Object, Array, Date, RegExp, Function, String, Number, Boolean, undefined) {
+!(function(Object, Array, Date, RegExp, Function, String, Number, Boolean, undefined) {
 
     Object.getType = function(obj) {
         return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
@@ -19,7 +19,6 @@
     Object.toObject = function(obj) {
         return Object(obj)
     }
-
     Array.toArray = function(list) {
         if (list && 'length' in list) {
             var arr = [];
@@ -31,17 +30,14 @@
         }
         return [list]
     }
-
     Date.toDate = function(str) {
         str = String(str).replace(/-/g, '\/');
         str = str.replace(/年|月/g, '\/').replace('日', ' '); // '2017年10月12日' -> '2017/10/12'
         return new Date(str)
     }
-
     RegExp.toRegExp = function(obj) {
         return RegExp(obj)
     }
-
     Function.toFunction = function(str) {
         try {
             return Function(str)
@@ -49,18 +45,15 @@
             return function() {}
         }
     }
-
     String.toString = function(obj) {
         return obj + ''
     }
-
     Number.toNumber = function(obj) {
         var n = Number(obj);
         n = isNaN(n) ? Number(String(obj).match(/\d+/)) : n;
         n = isNaN(n) ? +obj : n;
         return n
     }
-
     Boolean.toBoolean = function(obj) {
         if (obj == 'true') {
             return true
@@ -76,26 +69,12 @@
     Array.isArrayLike = function(list) {
         return 'length' in Object(list)
     }
-
-    Number.toInt = function(obj) {
-        var n = parseInt(obj);
-        n = isNaN(n) ? +obj : n;
-        return isNaN(n) ? 0 : n
-    }
-
     Number.isInt = function(obj) {
         return typeof obj == 'number' && !String(obj).match(/\.|NaN|Infinity/)
     }
-
     Number.isNaN = function(obj) {
         return typeof obj == 'number' && isNaN(obj)
     }
-
-
-    // Object.isX
-    // X.isX
-    // X.toX
-    // *.toX
     Object.isObject = function(obj) {
         return Object.isType('object', obj)
     }
@@ -105,51 +84,105 @@
     Object.isNull = function(obj) {
         return Object.isType('null', obj)
     }
-    // var list = [Object, Array, Date, RegExp, Function, String, Number, Boolean, undefined, null];
-    var list = [Array, Date, RegExp, Function, String, Number, Boolean];
-    for (var i = 0; i < list.length; i++) {
+    Object.isArrayLike = function(obj) {
+        return Array.isArrayLike(obj)
+    }
+    Object.isEmpty = function(obj) {
+        if (obj && typeof obj == 'object') {
+            return !Object.keys(obj).length
+        } else {
+            return !obj
+        }
+    }
+
+    Number.toInt = function(obj) {
+        var n = parseInt(obj);
+        n = isNaN(n) ? +obj : n;
+        return isNaN(n) ? 0 : n
+    }
+
+
+    // *.getType
+    // Object.getType
+    // 
+    // *.is[Type]
+    // *.isType
+    // [Type].is[Type]
+    // Object.is[Type]
+    // 
+    // *.to[Type]
+    // [Type].to[Type]
+
+
+    // var types = [Object, Array, Date, RegExp, Function, String, Number, Boolean, undefined, null];
+    var types = [Array, Date, RegExp, Function, String, Number, Boolean];
+    for (var i = 0; i < types.length; i++) {
         (function() {
-            var Fn = list[i];
-            var FnName = Fn.name;
-            var prototype = Fn.prototype;
+            var Type = types[i];
+            var TypeName = Type.name;
+            var prototype = Type.prototype;
 
-            // Object.isX
-            Object['is' + FnName] = Fn['is' + FnName];
-
-            // X.isX
-            if (!Fn['is' + FnName]) {
-                Fn['is' + FnName] = function(obj) {
-                    return Object.isType(FnName, obj)
-                }
+            // *.getType
+            prototype.getType = function() {
+                return Object.getType(this)
             }
 
-            // *.toX
-            for (var j = 0; j < list.length; j++) {
+            // *.isType
+            prototype.isType = function(type) {
+                return Object.isType(type, this)
+            }
+            // *.is[Type]
+            prototype['is' + TypeName] = function() {
+                return Object.isType(TypeName, this)
+            }
+            // [Type].is[Type]
+            Type['is' + TypeName] = function(obj) {
+                return Object.isType(TypeName, obj)
+            }
+            // Object.is[Type]
+            Object['is' + TypeName] = function(type) {
+                return Type['is' + TypeName]
+            }
+            // *.isInt
+            prototype.isInt = function() {
+                return Number.isInt(this)
+            }
+            // *.isNaN
+            prototype.isNaN = function() {
+                return isNaN(this)
+                // return Number.isNaN(this.valueOf())
+            }
+            // *.isArrayLike
+            prototype.isArrayLike = function() {
+                return Array.isArrayLike(this)
+            }
+            // *.isEmpty
+            prototype.isEmpty = function() {
+                return Object.isEmpty(this)
+            }
+
+            // *.to[Type]
+            for (var j = 0; j < types.length; j++) {
                 (function() {
-                    var toFn = list[j];
-                    var toX = 'to' + toFn.name;
-                    if (!prototype[toX]) {
-                        prototype[toX] = function() {
-                            return toFn[toX](this.valueOf()) // *valueOf this恒为对象
+                    var toType = types[j];
+                    var toTypeName = 'to' + toType.name;
+                    if (!prototype[toTypeName]) { // ! ''.toString
+                        prototype[toTypeName] = function() {
+                            return toType[toTypeName](this.valueOf()) // *valueOf this恒为对象
                         }
                     }
                 })()
             }
-            // *.toInt
+            // *.toInt *.parseInt
             prototype['toInt'] = prototype['parseInt'] = function() {
                 return Number.toInt(this)
             }
-            // *.isNaN
-            prototype['isNaN'] = function() {
-                return isNaN(this)
-                // return Number.isNaN(this.valueOf())
-            }
 
-            // *.toJSON
-            prototype['toJSON'] = prototype['toJSON'] || function () {
-                var obj = Object.copy(this);
-                obj.toJSON = null;
-                return JSON.stringify(obj)
+
+
+            // *.toJson
+            prototype['toJson'] = function() {
+                return JSON.stringify(typeof(this) == 'object' ? this : this.valueOf())
             }
 
         })()
@@ -175,15 +208,15 @@
 // console.log(12, Function.toFunction(undefined))
 // console.log(13, Function.toFunction(new Function))
 
-// // console.log(({}).toBoolean())
-// console.log(1, ([]).isNaN())
-// console.log(2, ([1]).isNaN())
-// console.log(3, ('').isNaN())
-// console.log(4, ('str').isNaN())
-// console.log(5, ('2017-10-1').isNaN())
-// console.log(6, (0).isNaN())
-// console.log(7, (1).isNaN())
-// console.log(8, (false).isNaN())
-// console.log(9, (NaN).isNaN())
-// console.log(10, (/x/).isNaN())
-// console.log(11, (new Boolean).isNaN())
+// // console.log(({}).toJson())
+// console.log(1, ([]).toJson())
+// console.log(2, ([1]).toJson())
+// console.log(3, ('').toJson())
+// console.log(4, ('str').toJson())
+// console.log(5, ('2017-10-1').toJson())
+// console.log(6, (0).toJson())
+// console.log(7, (1).toJson())
+// console.log(8, (false).toJson())
+// console.log(9, (NaN).toJson())
+// console.log(10, (/x/).toJson())
+// console.log(11, (new Date).toJson())

@@ -4,7 +4,7 @@
  * wushufen: 404315887@qq.com
  */
 
-(function(Number, prototype) {
+!(function(Number, prototype) {
     /*
     js小数运算精度问题解决方案
 

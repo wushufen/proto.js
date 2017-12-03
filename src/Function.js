@@ -4,7 +4,7 @@
  * wushufen: 404315887@qq.com
  */
 
-(function(Function, prototype) {
+!(function(Function, prototype) {
 
     prototype.bind = prototype.bind || function(ctx) {
         var fn = this;

@@ -4,7 +4,7 @@
  * wushufen: 404315887@qq.com
  */
 
-(function(String, prototype) {
+!(function(String, prototype) {
 
     String.trim = function(obj) {
         if (obj === null || obj === undefined) {

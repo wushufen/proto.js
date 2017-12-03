@@ -4,7 +4,7 @@
  * wushufen: 404315887@qq.com
  */
 
-(function(Array, prototype) {
+!(function(Array, prototype) {
 
     Array.range = function(start, end, step) {
         if (end == undefined) {
@@ -27,13 +27,10 @@
         configurable: true,
         enumerable: true,
         get: function() {
-            console.warn('勿用 for...in 遍历数组');
-            console.trace()
+            console.trace('勿用 for...in 遍历数组')
             return '__noforin__'
         },
-        set: function() {
-
-        }
+        set: function() {}
     });
 
     var polyfill = {
@@ -383,7 +380,7 @@
             return index >= 0 ? index : this.length + index
         },
         nth: function(index) {
-            return index >= 0 ? this[index] : this[this.length + index]
+            return this[this.realIndex(index)]
         },
         first: function() {
             return this[0]
@@ -474,7 +471,7 @@
         },
         copy: function(deep) {
             if (deep) {
-                return Object.copy(this, deep)
+                return Object.copy(this)
             }
             return this.concat()
         },

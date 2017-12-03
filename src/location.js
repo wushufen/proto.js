@@ -8,7 +8,7 @@
  * wushufen: 404315887@qq.com
  */
 
-(function() {
+!(function() {
     if (typeof location == 'undefined') return
 
     function convert(value) {
