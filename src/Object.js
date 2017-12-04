@@ -32,60 +32,56 @@
         }
         return values
     }
-    Object.copy = function(obj, max) {
-        var count = 0;
-        return (function copy(parent, key, obj, depth) {
-            // console.log(count, parent, key)
-            // console.log(Array(depth+1).join('--'), key, typeof obj)
-            var type = typeof obj;
 
-            max = max || 10000;
+    Object.copy = function(obj, max) {
+        var list = []
+        var count = 0
+        max = max || 1000
+
+        var _obj = copyFirst(obj)
+
+        function copyFirst(obj) {
+            // console.log(count, obj)
+            var type = typeof obj
+
+            count += 1
             if (count > max) {
                 // return '...'
-                // console.log(count, parent, key)
                 return obj
             }
-
-            // todo 广度优先
-            if (obj === null || type !== 'object') {
-                count += 1;
+            if (obj === null || type != 'object') {
                 return obj
-            } else if (obj instanceof Array) {
-                var _arr = [];
-                for (var i = 0, length = obj.length; i < length; i++) {
-                    var item = obj[i];
-                    var type = typeof item;
-                    if (obj === null || type !== 'object') {
-                        _arr[i] = copy(obj, i, item, depth+1)
-                    }
-                }
-                for (var i = 0, length = obj.length; i < length; i++) {
-                    var item = obj[i];
-                    var type = typeof item;
-                    if (obj !== null && type == 'object') {
-                        _arr[i] = copy(obj, i, item, depth+1)
-                    }
-                }
-                return _arr
-            } else if (type == 'object') {
-                var _obj = {}
-                for (var key in obj) {
-                    var item = obj[key];
-                    var type = typeof item;
-                    if (obj === null || type !== 'object') {
-                        _obj[key] = copy(obj, key, item, depth+1)
-                    }
-                }
-                for (var key in obj) {
-                    var item = obj[key];
-                    var type = typeof item;
-                    if (obj !== null && type == 'object') {
-                        _obj[key] = copy(obj, key, item, depth+1)
-                    }
-                }
+            } else {
+                var _obj = obj instanceof Array ? [] : {}
+                list.push({
+                    obj: obj,
+                    _obj: _obj
+                })
                 return _obj
             }
-        })('root', '', obj, 0, 0)
+        }
+
+        while (list.length) {
+            (function() {
+
+                var info = list.shift()
+                var obj = info.obj
+                var _obj = info._obj
+
+                if (obj instanceof Array) {
+                    for (var key = 0; key < obj.length; key++) {
+                        _obj[key] = copyFirst(obj[key])
+                    }
+                } else {
+                    for (var key in obj) {
+                        _obj[key] = copyFirst(obj[key])
+                    }
+                }
+
+            })()
+        }
+
+        return _obj
     }
 
 })(Object, Object.prototype)
