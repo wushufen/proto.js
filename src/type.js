@@ -1,6 +1,6 @@
 /*
  * c 2016.04.01
- * u 2017.11.29
+ * u 2017.12.11
  * wushufen: 404315887@qq.com
  */
 
@@ -30,10 +30,15 @@
         }
         return [list]
     }
-    Date.toDate = function(str) {
-        str = String(str).replace(/-/g, '\/');
-        str = str.replace(/年|月/g, '\/').replace('日', ' '); // '2017年10月12日' -> '2017/10/12'
-        return new Date(str)
+    Date.toDate = function(value) {
+        if (!isNaN(value)) {
+            value = +value
+        } else
+        if (typeof value == 'string') {
+            value = String(value).replace(/-/g, '\/');
+            value = value.replace(/年|月/g, '\/').replace('日', ' '); // '2017年10月12日' -> '2017/10/12'
+        }
+        return new Date(value)
     }
     RegExp.toRegExp = function(obj) {
         return RegExp(obj)
@@ -45,8 +50,12 @@
             return function() {}
         }
     }
+    var _StringToString = String.toString
     String.toString = function(obj) {
-        return obj + ''
+        if (arguments.length>0) {
+            return String(obj)
+        }
+        return _StringToString.call(String)
     }
     Number.toNumber = function(obj) {
         var n = Number(obj);
@@ -140,8 +149,8 @@
                 return Object.isType(TypeName, obj)
             }
             // Object.is[Type]
-            Object['is' + TypeName] = function(type) {
-                return Type['is' + TypeName]
+            Object['is' + TypeName] = function(obj) {
+                return Object.isType(TypeName, obj)
             }
             // *.isInt
             prototype.isInt = function() {
@@ -181,8 +190,8 @@
 
 
             // *.toJson
-            prototype['toJson'] = function() {
-                return JSON.stringify(typeof(this) == 'object' ? this : this.valueOf())
+            prototype['toJson'] = function(space) {
+                return JSON.stringify(this.valueOf(), null, space)
             }
 
         })()
