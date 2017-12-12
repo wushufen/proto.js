@@ -1,6 +1,6 @@
 /*
  * c 2016.04.01
- * u 2017.11.29
+ * u 2017.12.05
  * wushufen: 404315887@qq.com
  */
 
@@ -41,7 +41,8 @@
 
         return pattern.replace(/E+/g, function() {
             return String(date).match('中国') ?
-                '星期' + '日一二三四五六'.charAt(date.getDay()) : 'Sun,Mon,Tue,Wed,Thu,Fri,Sat'.split(',')[date.getDay()]
+                '星期' + '日一二三四五六'.charAt(date.getDay()) :
+                'Sun,Mon,Tue,Wed,Thu,Fri,Sat'.split(',')[date.getDay()]
         })
     }
 
