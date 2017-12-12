@@ -56,8 +56,16 @@
      * 
      * @return {Boolean} [description]
      */
-    prototype.isInvalidDate = function() {
+    prototype.isInvalid = prototype.isInvalidDate = function() {
         return isNaN(this)
+    }
+    /**
+     * 是否有效日期
+     * 
+     * @return {Boolean} [description]
+     */
+    prototype.isValid = prototype.isValidDate = function() {
+        return !isNaN(this)
     }
 
     /**
