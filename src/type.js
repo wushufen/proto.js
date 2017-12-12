@@ -191,7 +191,8 @@
 
             // *.toJson
             prototype['toJson'] = function(space) {
-                return JSON.stringify(this.valueOf(), null, space)
+                var value = typeof(this) == 'object' ? this : this.valueOf() // * Date
+                return JSON.stringify(value, null, space)
             }
 
         })()
