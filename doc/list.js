@@ -13,16 +13,22 @@ null
 empty
 
 json
-csv
+// csv
 
 
 // type
 .getType
-.isType
-.toType
+.is[Type]
+.to[Type]
 
-// *
+// Object
+.assign
+.keys
+.values
 .copy
+
+// Array
+.range
 
 // 遍
 .forEach
@@ -34,21 +40,9 @@ csv
 .select .where
 .get
 .getIndex
-.index .nth
-.first
-.last
-.indexOf
-.lastIndexOf
-.includes
 .has .contains
-.eq
-.same
-.xor
 .key
-.page
-.pageCount
-.top
-.limit
+.includes
 
 // 改
 .update
@@ -73,6 +67,24 @@ csv
 .filelds
 .column .col
 
+// 比
+.eq
+.same
+.xor
+
+// 标
+.index .nth
+.first
+.last
+.indexOf
+.lastIndexOf
+
+// 页
+.page
+.pageCount
+.top
+.limit
+
 // 算
 .min
 .max
@@ -93,3 +105,5 @@ csv
 // JSON
 
 // CSV
+
+// location
