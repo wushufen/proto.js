@@ -1,6 +1,6 @@
 /*
  * c 2016.04.01
- * u 2017.11.29
+ * u 2017.12.11
  * wushufen: 404315887@qq.com
  */
 
@@ -23,11 +23,15 @@
         return arr
     };
 
+    var hasWarnForIn = false;
     Object.defineProperty && Object.defineProperty(Array.prototype, '__noforin__', {
         configurable: true,
         enumerable: true,
         get: function() {
-            console.trace('勿用 for...in 遍历数组')
+            if (!hasWarnForIn) {
+                hasWarnForIn = true;
+                console.trace('勿用 for...in 遍历数组')
+            }
             return '__noforin__'
         },
         set: function() {}
@@ -91,11 +95,42 @@
     };
 
     // 'a<'.isMatch(/(.*?)(>|>=|<|<=|==|===)$/)
-    function isMatch(obj, _obj, deep) {
+    function isMatch(obj, _obj, compare, deep) {
+        // console.log(obj, _obj, deep, compare)
+
         deep = deep || 0;
         // console.log('deep', deep)
         if (deep > 10) {
             return false;
+        }
+
+        // compare
+        // == === != !== > >= < <=
+        // list.select({'age>': 18})
+        if (compare) {
+            switch (compare) {
+                case '==':
+                    return obj == _obj;
+                case '===':
+                    return obj === _obj;
+                case '!=':
+                    return obj != _obj;
+                case '!==':
+                    return obj !== _obj;
+                case '>':
+                    return obj > _obj;
+                case '>=':
+                    return obj >= _obj;
+                case '<':
+                    return obj < _obj;
+                case '<=':
+                    return obj <= _obj;
+            }
+        }
+
+        // reg
+        if (getType(_obj) == 'regexp') {
+            return _obj.test(obj)
         }
 
         // ===
@@ -114,31 +149,28 @@
                 return false
             }
             for (var i = 0, length = _obj.length; i < length; i++) {
-                if (!isMatch(obj[i], _obj[i], deep + 1)) {
+                if (!isMatch(obj[i], _obj[i], '', deep + 1)) {
                     return false
                 }
             }
             return true
         }
         // {id:1,name:'wsf'} {id:1,age:18} 共同字段相等则视为相等
-        // > >= == === <= < 
-        // list.select('age>18')
-        // list.select('age>', 18)
-        // list.select({'age>': 18}) @@@
-        // list.select({age: '>18'})
-        // list.select({age: '>' + 18})
-        // list.select({age: ['>', 18]})
         if (getType(obj) == 'object' && getType(_obj) == 'object') {
             // console.log('eq: {}')
             if (!Object.keys(obj).length && !Object.keys(_obj).length) {
                 return true
             }
-
             var eq = false;
-            for (var key in _obj) {
+            for (var _key in _obj) {
+                var key_compare = _key.match(/(.+?)\s*(===|!==|==|!=|>=|>|<=|<)?\s*$/) || [];
+                var compare = key_compare[2];
+                var key = key_compare[1];
+                // console.log('key_compare', key_compare, key, compare)
+
                 if (key in obj) {
                     eq = true;
-                    if (!isMatch(obj[key], _obj[key], deep + 1)) {
+                    if (!isMatch(obj[key], _obj[_key], compare, deep + 1)) {
                         return false
                     }
                 }
@@ -152,6 +184,7 @@
     // console.log(isMatch({a:1},{}))
     // console.log(isMatch('str','str'))
     // console.log(isMatch('',[]))
+    // console.log(isMatch(1, 2, null, '>'))
 
     // ([1]) => [1]
     // ([1,2]) => [1,2]
@@ -551,7 +584,10 @@
 //     // list.remove(0,1,2)
 //     // [1, 2, 3].insertIndex(-1, ['x', 'y', 'z'])
 //     // [1,2,3].realIndex(-1)
-//     list.index(null, 'x', 'y')
+//     // list.index(null, 'x', 'y')
+//     // [{ id: 2 }].select({ 'id>=': 2 })
 // )
 
 // console.log([0,1,{id:1}].getIndex(1))
+
+// console.log([{ name: 'wsf' }, { name: 'wyb' }].select({ name: /ws/ }))
