@@ -217,3 +217,6 @@
     }
 
 })(Date, Date.prototype)
+
+// console.log(new Date('xxoo').isValid())
+// console.log(new Date().diff(new Date().hours(2)))

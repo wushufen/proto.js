@@ -179,6 +179,7 @@
         }
         return false
     }
+    Array.isMatch = isMatch;
     Object.isMatch = isMatch;
     // console.log(isMatch([{a:1}], [{a:1}]))
     // console.log(isMatch({a:1},{}))
