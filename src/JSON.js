@@ -15,7 +15,7 @@
                 throw 'parse match "(..)" or "="'
             }
 
-            return global.eval('(' + json + ')')
+            return global.eval('(' + json + ')') // 直接写 eval 会影响 uglify 压缩
         },
         stringify: function(obj, replacer, space) {
             if (typeof(space) == 'number') {
@@ -109,12 +109,16 @@ console.log(
         b: true,
         o: { n: 1 },
         e: {},
-        a: [undefined, null, 'string', 1, true, { n: 1 },
-            [], Function, new Date, /reg/
-        ],
+        a: [undefined, null, 'string', 1, true, { n: 1 }, [], Function, new Date, /reg/ ],
         f: function() {},
         d: new Date,
         r: /reg/,
     }, null, 4)
     // )
 )*/
+
+// console.log(global)
+// console.log(this)
+// console.log(eval('this'))
+// console.log(function(){return this}()) // webpack 打包前加了 "use strict" this 为 undefined
+// console.log(Function('return this')()) // 不会有以上情况
