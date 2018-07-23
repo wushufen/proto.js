@@ -211,21 +211,21 @@
             <li>
                 <a href="#"><span class="c-obj">RegExp</span></a>
                 <ul>
-                    <li><a href="#"><span class="c-property">.han</span> <span class="c-comment">//</span></a></li>
-                    <li><a href="#"><span class="c-property">.ascii</span> <span class="c-comment">//</span></a></li>
-                    <li><a href="#"><span class="c-property">.phone</span> <span class="c-comment">//</span></a></li>
-                    <li><a href="#"><span class="c-property">.tel</span> <span class="c-comment">//</span></a></li>
-                    <li><a href="#"><span class="c-property">.email</span> <span class="c-comment">//</span></a></li>
-                    <li><a href="#"><span class="c-property">.date</span> <span class="c-comment">//</span></a></li>
-                    <li><a href="#"><span class="c-property">.postCode</span> <span class="c-comment">//</span></a></li>
-                    <li><a href="#"><span class="c-property">.idCard</span> <span class="c-comment">//</span></a></li>
-                    <li><a href="#"><span class="c-property">.url</span> <span class="c-comment">//</span></a></li>
-                    <li><a href="#"><span class="c-property">.number</span> <span class="c-comment">//</span></a></li>
-                    <li><a href="#"><span class="c-property">.int</span> <span class="c-comment">//</span></a></li>
-                    <li><a href="#"><span class="c-property">.float</span> <span class="c-comment">//</span></a></li>
-                    <li><a href="#"><span class="c-property">.ipv4</span> <span class="c-comment">//</span></a></li>
-                    <li><a href="#"><span class="c-property">.ipv6</span> <span class="c-comment">//</span></a></li>
-                    <li><a href="#"><span class="c-property">.ip</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.han"><span class="c-property">.han</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.ascii"><span class="c-property">.ascii</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.phone"><span class="c-property">.phone</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.tel"><span class="c-property">.tel</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.email"><span class="c-property">.email</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.date"><span class="c-property">.date</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.postCode"><span class="c-property">.postCode</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.idCard"><span class="c-property">.idCard</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.url"><span class="c-property">.url</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.number"><span class="c-property">.number</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.int"><span class="c-property">.int</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.float"><span class="c-property">.float</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.ipv4"><span class="c-property">.ipv4</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.ipv6"><span class="c-property">.ipv6</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#RegExp.ip"><span class="c-property">.ip</span> <span class="c-comment">//</span></a></li>
                 </ul>
             </li>
             <li>
@@ -1394,6 +1394,98 @@ var f = function(){
 
                     </code>
                 </pre>
+                <!--  -->
+                <h3 id="RegExp.han">RegExp.han</h3>
+                <pre>
+                    <code>
+RegExp.han.test('中')
+                    </code>
+                </pre>
+                <h3 id="RegExp.ascii">RegExp.ascii</h3>
+                <pre>
+                    <code>
+RegExp.ascii.test('中')
+                    </code>
+                </pre>
+                <h3 id="RegExp.phone">RegExp.phone</h3>
+                <pre>
+                    <code>
+RegExp.phone.test('18812345678')
+                    </code>
+                </pre>
+                <h3 id="RegExp.tel">RegExp.tel</h3>
+                <pre>
+                    <code>
+RegExp.tel.test('(020)8888888')
+                    </code>
+                </pre>
+                <h3 id="RegExp.email">RegExp.email</h3>
+                <pre>
+                    <code>
+RegExp.email.test('user.name@domain.com')
+                    </code>
+                </pre>
+                <h3 id="RegExp.date">RegExp.date</h3>
+                <pre>
+                    <code>
+RegExp.date.test('2008-08-08 08:08:08')
+                    </code>
+                </pre>
+                <h3 id="RegExp.postCode">RegExp.postCode</h3>
+                <pre>
+                    <code>
+RegExp.postCode.test('525022')
+                    </code>
+                </pre>
+                <h3 id="RegExp.idCard">RegExp.idCard</h3>
+                <pre>
+                    <code>
+RegExp.idCard.test('44090220080808123X')
+                    </code>
+                </pre>
+                <h3 id="RegExp.url">RegExp.url</h3>
+                <pre>
+                    <code>
+RegExp.url.test('http://domain.com/path/to/page.html')
+                    </code>
+                </pre>
+                <h3 id="RegExp.number">RegExp.number</h3>
+                <pre>
+                    <code>
+RegExp.number.test('-1.5')
+                    </code>
+                </pre>
+                <h3 id="RegExp.int">RegExp.int</h3>
+                <pre>
+                    <code>
+RegExp.int.test('1.5')
+                    </code>
+                </pre>
+                <h3 id="RegExp.float">RegExp.float</h3>
+                <pre>
+                    <code>
+RegExp.float.test('1')
+                    </code>
+                </pre>
+                <h3 id="RegExp.ipv4">RegExp.ipv4</h3>
+                <pre>
+                    <code>
+RegExp.ipv4.test('172.16.1.1')
+                    </code>
+                </pre>
+                <h3 id="RegExp.ipv6">RegExp.ipv6</h3>
+                <pre>
+                    <code>
+RegExp.ipv6.test('172.16.1.1')
+                    </code>
+                </pre>
+                <h3 id="RegExp.ip">RegExp.ip</h3>
+                <pre>
+                    <code>
+RegExp.ip.test('172.16.1.1')
+                    </code>
+                </pre>
+                <!--  -->
                 <h3 id="JSON.parse">JSON.parse</h3>
                 <pre>
                     <code>
@@ -1404,13 +1496,6 @@ JSON.parse('[{id:1},{id:2}]')
                 <pre>
                     <code>
 JSON.stringify([{id:1},{id:2}], null, '   ')
-                    </code>
-                </pre>
-                <!--  -->
-                <h3 id="RegExp.han">RegExp.han</h3>
-                <pre>
-                    <code>
-RegExp.han.test('中')
                     </code>
                 </pre>
             </div>
