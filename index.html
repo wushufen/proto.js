@@ -509,6 +509,7 @@ list.map(function(item, i, list){
                 </pre>
                 <h3 id="Array.prototype.select">Array.prototype.select(where)</h3>
                 <p>where: 查询条件</p>
+                <p>1. where 默认匹配规则： 基本类型转为String后比较，如 1 和 '1' ，true 和 'true' ， NaN 和 NaN 等 视为相等，复杂类型则递归按上述规则对比</p>
                 <pre>
                     <code>
 var list = [
@@ -520,6 +521,31 @@ var list = [
 list.select({name:'wsf'})
                     </code>
                 </pre>
+                <p>2. where 的key带上比较符： '==' '===' '!=' '!==' '>' '>=' '<' '<='</p>
+                <pre>
+                    <code>
+var list = [
+    {id:1, name:'wsf', age:10},
+    {id:2, name:'wsf2', age:17},
+    {id:3, name:'wsf', age:18},
+]
+
+list.select({'age>=': 18})
+                    </code>
+                </pre>
+                <p>3. where 使用正则进行匹配</p>
+                <pre>
+                    <code>
+var list = [
+    {id:1, name:'wsf'},
+    {id:2, name:'wsf2'},
+    {id:3, name:'wsf'},
+]
+
+list.select({name: /f2/})
+                    </code>
+                </pre>
+                <p>其它使用where参数的方法，皆用以上方式进行匹配</p>
                 <h3 id="Array.prototype.where">Array.prototype.where(where)</h3>
                 <p>select 别名</p>
                 <h3 id="Array.prototype.get">Array.prototype.get(where)</h3>
@@ -1502,6 +1528,7 @@ JSON.stringify([{id:1},{id:2}], null, '   ')
         </div>
     </div>
     <script src="dest/proto.js"></script>
+    <script src="src/Array.js"></script>
     <script src="assets/lib/wu.hightlight.js/wu.hightlight.js"></script>
     <script>
         var codeEls = document.querySelectorAll('pre code');
@@ -1513,7 +1540,7 @@ JSON.stringify([{id:1},{id:2}], null, '   ')
             var outputEl = document.createElement('code');
             outputWp.appendChild(outputEl);
             preEl.parentNode.insertBefore(outputWp, preElNext);
-            var js = codeEl.innerHTML;
+            var js = codeEl.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g, '>');
             var result = eval(js);
             if (Object.isType('date', result)) {
                 result = '[Date] '+ result

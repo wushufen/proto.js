@@ -225,6 +225,10 @@
             return this
         },
         select: function(condition, one) {
+        	if (!arguments.length) {
+        		return [].concat(this)
+        	}
+
             var arr = [];
             for (var i = 0, length = this.length; i < length; i++) {
                 var item = this[i];
