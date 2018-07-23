@@ -54,3 +54,9 @@ list.select({country:'中国'})
 ```javascript
 true
 ```
+
+
+## DOC
+详见文档
+
+[](https://wusfen.github.io/proto.js)
