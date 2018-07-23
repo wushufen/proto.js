@@ -6,7 +6,7 @@ proto.js 是一个js增强库，提供许多实用的链式方法，使数据操
 '2008-08-08'.toDate().addDate(-3).format('yyyy-MM-dd')
 ```
 ```javascript
-'2018-08-05'
+'2008-08-05'
 ```
 
 ## 数组操作，CRUD
