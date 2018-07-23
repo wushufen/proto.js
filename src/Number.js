@@ -70,6 +70,23 @@
     }
 
 
+    /*
+    大数用‘万，亿’表示
+     */
+    prototype.toWY = function(n) {
+        n = n || 0
+        var value = this
+        for (var i = 0; true; i++) {
+            var v = value / 10000
+            if (v < 1) break
+            value = v
+        }
+        return (+value.toFixed(n)) +
+            Array(i % 2 + 1).join('万') +
+            Array(parseInt(i / 2) + 1).join('亿')
+    }
+
+
     Number.random = function(start, end, float) {
         var n = Math.random() * (end - start + (float ? 0 : 1)) + start;
         return float ? n : parseInt(n)
@@ -104,3 +121,4 @@ test(220.2342, '-', 20.2323)
 
 // console.log((0.5025*100).fixed())
 // console.log((220.2342 - 20.2323).fixed())
+console.log(23413241.1.toWY())

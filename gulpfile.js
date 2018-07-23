@@ -21,7 +21,7 @@ gulp.task('js', function() {
     var uglify = require('gulp-uglify');
     var concat = require('gulp-concat');
 
-    gulp.src('src/{license,{type,String,Number,Boolean,Date,Object,Array,Function,JSON,location}.js}')
+    gulp.src('src/{license,{type,String,Number,Boolean,Date,Object,Array,Function,RegExp,JSON,location}.js}')
         .pipe(uglify({
             output: {
                 comments: /@author/,

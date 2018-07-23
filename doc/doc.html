@@ -230,6 +230,21 @@
             <li>
                 <a href="#"><span class="c-obj">RegExp</span></a>
                 <ul>
+                    <li><a href="#"><span class="c-property">.han</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#"><span class="c-property">.ascii</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#"><span class="c-property">.phone</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#"><span class="c-property">.tel</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#"><span class="c-property">.email</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#"><span class="c-property">.date</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#"><span class="c-property">.postCode</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#"><span class="c-property">.idCard</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#"><span class="c-property">.url</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#"><span class="c-property">.number</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#"><span class="c-property">.int</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#"><span class="c-property">.float</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#"><span class="c-property">.ipv4</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#"><span class="c-property">.ipv6</span> <span class="c-comment">//</span></a></li>
+                    <li><a href="#"><span class="c-property">.ip</span> <span class="c-comment">//</span></a></li>
                 </ul>
             </li>
             <li>
@@ -1253,6 +1268,7 @@ new Date('2017/10/10').time()
 new Date('2017/10/10').time(1)
                     </code>
                 </pre>
+                <!--  -->
                 <h3 id="Number.random">Number.random</h3>
                 <pre>
                     <code>
@@ -1363,6 +1379,13 @@ Number.random(1,5, true)
 (0.5025*100).fixed()
                     </code>
                 </pre>
+                <!--  -->
+                <h3 id="RegExp.han">RegExp.han</h3>
+                <pre>
+                    <code>
+RegExp.han.test('中')
+                    </code>
+                </pre>
             </div>
         </div>
     </div>
@@ -1381,7 +1404,7 @@ Number.random(1,5, true)
             var js = codeEl.innerHTML;
             var result = eval(js);
             if (Object.isType('date', result)) {
-                result = '[Date] '+ result.format()
+                result = '[Date] '+ result.format('yyyy-MM-dd HH:mm:ss.SSS')
             }
             if (Object.isString(result)) {
                 outputEl.innerHTML = "'"+result+"'"
