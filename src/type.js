@@ -34,8 +34,8 @@
         if (!isNaN(value)) {
             value = +value
         } else
-        if (typeof value == 'string') {
-            value = String(value).replace(/-/g, '\/');
+        if (typeof value == 'string' && !/Z$/i.test(value)) {
+            value = value.replace(/-/g, '\/');
             value = value.replace(/年|月/g, '\/').replace('日', ' '); // '2017年10月12日' -> '2017/10/12'
         }
         return new Date(value)

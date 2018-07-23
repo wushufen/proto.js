@@ -1,0 +1,169 @@
+/* 侧边栏 */
+
+
+/*
+html{
+    body{
+        .sidebar{
+            .sidebar-header{h1}
+            ul.sidebar-menu{
+                li{
+                    a
+                    ul{
+                        li{ a }
+                    }
+                }
+            }
+        }
+        .navbar{}
+        .layout-main{}
+    }
+}
+*/
+
+.sidebar-layout,
+.sidebar-layout body {
+    height: 100%;
+}
+
+.navbar{
+    margin-left: 20em;
+    z-index: 100;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: -3em;
+    height: 3em;
+    border-bottom: solid 1px #ddd;
+    background: #fff;
+    box-shadow: 0px 0px 15px #fff;
+}
+
+.navbar-title{
+    display: block;
+    text-align: center;
+    font-size: 1.5em;
+    margin: 0;
+    padding: 0;
+}
+
+.layout-main {
+    margin-left: 20em;
+    /* margin-top: 3em; */
+}
+
+.sidebar {
+    z-index: 101;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 20em;
+    overflow: auto;
+    border-right: solid 1px #ddd;
+    background: #fff;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.sidebar>* {
+    flex: none;
+}
+
+.sidebar-header {
+    border-bottom: solid 1px #ddd;
+}
+.sidebar-header h1 {
+    margin: 0;
+    padding: 16px;
+    font-weight: normal;
+    color: #333;
+}
+
+.sidebar-menu {
+    overflow: auto;
+    flex: 1 1 auto;
+}
+
+.sidebar-menu,
+.sidebar-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-menu li,
+.sidebar-menu li a{
+    padding: .5em 1em;
+    line-height: 1.5;
+    color: #888;
+}
+
+.sidebar-menu li a {
+    margin: -.5em -1em;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar-menu li a:hover {
+    background: #f7f7f7;
+}
+
+.sidebar-menu li a.active {
+    color: #111;
+}
+
+.sidebar-menu-arrow {
+}
+
+.sidebar-menu li ul {
+    margin: .5em -1em 0;
+}
+
+.sidebar-menu li li {
+    padding-left: 3em;
+}
+
+.sidebar-menu li li a {
+    margin-left: -3em;
+    padding-left: 3em;
+}
+
+.sidebar-menu li.open {}
+
+.sidebar-menu li.open .sidebar-menu-arrow {
+    transform: rotate(90deg);
+}
+
+.sidebar-menu li.open ul {
+    display: block;
+}
+
+.navbar,.sidebar,.layout-main{transition:.5s}
+@media (max-width: 800px) {
+    .navbar{
+        top: 0;
+        margin-left: 0;
+    }
+    .layout-main {
+        margin-left: 0;
+        margin-top: 3em;
+    }
+    .sidebar {
+        margin-left: -20em;
+    }
+    /*js toggle class .xs-sidebar-open at html*/
+    .sidebar-open .sidebar {
+        margin: 0;
+        box-shadow: 5px 0 50px rgba(0, 0, 0, .8);
+    }
+    .sidebar-open .navbar,
+    .sidebar-open .layout-main {
+        margin-right: -20em;
+        margin-left: 20em;
+    }
+}

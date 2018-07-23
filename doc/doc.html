@@ -43,6 +43,7 @@
             <li>
                 <a href="#"><span class="c-obj">Object</span></a>
                 <ul>
+                    <li><a href="#Object.isEmpty"><span class="c-method">.isEmpty</span> <span class="c-comment">//[es]</span></a></li>
                     <li><a href="#Object.assign"><span class="c-method">.assign</span> <span class="c-comment">//[es]</span></a></li>
                     <li><a href="#Object.keys"><span class="c-method">.keys</span> <span class="c-comment">//[es]</span></a></li>
                     <li><a href="#Object.values"><span class="c-method">.values</span> <span class="c-comment">//返回对象的值数组</span></a></li>
@@ -63,11 +64,9 @@
                             <li><a href="#Array.prototype.includes"><span class="c-method">.includes</span> <span class="c-comment">//[es]</span></a></li>
                             <li><a href="#Array.prototype.indexOf"><span class="c-method">.indexOf</span> <span class="c-comment">//[es]</span></a></li>
                             <li><a href="#Array.prototype.lastIndexOf"><span class="c-method">.lastIndexOf</span> <span class="c-comment">//[es]</span></a></li>
-                            <li>// 查</li>
                             <li><a href="#Array.prototype.select"><span class="c-method">.select</span> <span class="c-comment">//查找符合条件的元素返回数组</span></a></li>
                             <li><a href="#Array.prototype.where"><span class="c-method">.where</span> <span class="c-comment">//.select</span></a></li>
                             <li><a href="#Array.prototype.get"><span class="c-method">.get</span> <span class="c-comment">//select(where)[0] || false</span></a></li>
-                            <li>// 改</li>
                             <li><a href="#Array.prototype.update"><span class="c-method">.update</span> <span class="c-comment">//修改符合条件的元素</span></a></li>
                             <li><a href="#Array.prototype.delete"><span class="c-method">.delete</span> <span class="c-comment">//删除符合条件的元素</span></a></li>
                             <li><a href="#Array.prototype.del"><span class="c-method">.del</span> <span class="c-comment">//.delete</span></a></li>
@@ -109,7 +108,7 @@
                             <li><a href="#Array.prototype.random"><span class="c-method">.random</span> <span class="c-comment">//随机返回其中一个</span></a></li>
                             <li><a href="#Array.prototype.toJson"><span class="c-method">.toJson</span> <span class="c-comment">//转json</span></a></li>
                             <li><a href="#Array.prototype.toMap"><span class="c-method">.toMap</span> <span class="c-comment">//以元素某字段值作key转为map</span></a></li>
-                            <li><a href="#Array.prototype.key"><span class="c-method">.key</span></a></li>
+                            <li><a href="#Array.prototype.key"><span class="c-method">.key</span> <span class="c-comment">//返回第一个元素的某key的值</span></a></li>
                             <li><a href="#Array.prototype.__noforin__"><span class="c-method">.__noforin__</span> <span class="c-comment">//用于警告勿用'for in'遍历数组</span></a></li>
                         </ul>
                     </li>
@@ -118,30 +117,30 @@
             <li>
                 <a href="#"><span class="c-obj">Date</span></a>
                 <ul>
-                    <li><a href="#"><span class="c-method">.today</span> <span class="c-comment">//返回今天0点的日期</span></a></li>
-                    <li><a href="#"><span class="c-method">.yesterday</span> <span class="c-comment">//返回昨天0点的日期</span></a></li>
-                    <li><a href="#"><span class="c-method">.tomorrow</span> <span class="c-comment">//返回明天0点的日期</span></a></li>
+                    <li><a href="#Date.today"><span class="c-method">.today</span> <span class="c-comment">//返回今天0点的日期</span></a></li>
+                    <li><a href="#Date.yesterday"><span class="c-method">.yesterday</span> <span class="c-comment">//返回昨天0点的日期</span></a></li>
+                    <li><a href="#Date.tomorrow"><span class="c-method">.tomorrow</span> <span class="c-comment">//返回明天0点的日期</span></a></li>
                     <li>
                         <a href="#"><span class="c-prototype">.prototype</span></a>
                         <ul>
-                            <li><a href="#"><span class="c-method">.format</span> <span class="c-comment">//日期格式化</span></a></li>
-                            <li><a href="#"><span class="c-method">.diff</span> <span class="c-comment">//两个日期的差值格式化</span></a></li>
-                            <li><a href="#"><span class="c-method">.addFullYear</span> <span class="c-comment">//加减n年</span></a></li>
-                            <li><a href="#"><span class="c-method">.addMonth</span> <span class="c-comment">//加减n个月</span></a></li>
-                            <li><a href="#"><span class="c-method">.addDate</span> <span class="c-comment">//加减n天</span></a></li>
-                            <li><a href="#"><span class="c-method">.addHours</span> <span class="c-comment">//加减n小时</span></a></li>
-                            <li><a href="#"><span class="c-method">.addMinutes</span> <span class="c-comment">//加减n分钟</span></a></li>
-                            <li><a href="#"><span class="c-method">.addSeconds</span> <span class="c-comment">//加减n秒</span></a></li>
-                            <li><a href="#"><span class="c-method">.addMilliseconds</span> <span class="c-comment">//加减n毫秒</span></a></li>
-                            <li><a href="#"><span class="c-method">.addTime</span> <span class="c-comment">//获取或设置毫秒</span></a></li>
-                            <li><a href="#"><span class="c-method">.fullYear</span> <span class="c-comment">//获取或设置年</span></a></li>
-                            <li><a href="#"><span class="c-method">.month</span> <span class="c-comment">//获取或设置月</span></a></li>
-                            <li><a href="#"><span class="c-method">.date</span> <span class="c-comment">//获取或设置天</span></a></li>
-                            <li><a href="#"><span class="c-method">.hours</span> <span class="c-comment">//获取或设置小时</span></a></li>
-                            <li><a href="#"><span class="c-method">.minutes</span> <span class="c-comment">//获取或设置分钟</span></a></li>
-                            <li><a href="#"><span class="c-method">.seconds</span> <span class="c-comment">//获取或设置秒</span></a></li>
-                            <li><a href="#"><span class="c-method">.milliseconds</span> <span class="c-comment">//获取或设置毫秒</span></a></li>
-                            <li><a href="#"><span class="c-method">.time</span> <span class="c-comment">//获取或设置毫秒</span></a></li>
+                            <li><a href="#Date.prototype.format"><span class="c-method">.format</span> <span class="c-comment">//日期格式化</span></a></li>
+                            <li><a href="#Date.prototype.diff"><span class="c-method">.diff</span> <span class="c-comment">//两个日期的差值格式化</span></a></li>
+                            <li><a href="#Date.prototype.addFullYear"><span class="c-method">.addFullYear</span> <span class="c-comment">//加减n年</span></a></li>
+                            <li><a href="#Date.prototype.addMonth"><span class="c-method">.addMonth</span> <span class="c-comment">//加减n个月</span></a></li>
+                            <li><a href="#Date.prototype.addDate"><span class="c-method">.addDate</span> <span class="c-comment">//加减n天</span></a></li>
+                            <li><a href="#Date.prototype.addHours"><span class="c-method">.addHours</span> <span class="c-comment">//加减n小时</span></a></li>
+                            <li><a href="#Date.prototype.addMinutes"><span class="c-method">.addMinutes</span> <span class="c-comment">//加减n分钟</span></a></li>
+                            <li><a href="#Date.prototype.addSeconds"><span class="c-method">.addSeconds</span> <span class="c-comment">//加减n秒</span></a></li>
+                            <li><a href="#Date.prototype.addMilliseconds"><span class="c-method">.addMilliseconds</span> <span class="c-comment">//加减n毫秒</span></a></li>
+                            <li><a href="#Date.prototype.addTime"><span class="c-method">.addTime</span> <span class="c-comment">//获取或设置毫秒</span></a></li>
+                            <li><a href="#Date.prototype.fullYear"><span class="c-method">.fullYear</span> <span class="c-comment">//获取或设置年</span></a></li>
+                            <li><a href="#Date.prototype.month"><span class="c-method">.month</span> <span class="c-comment">//获取或设置月</span></a></li>
+                            <li><a href="#Date.prototype.date"><span class="c-method">.date</span> <span class="c-comment">//获取或设置天</span></a></li>
+                            <li><a href="#Date.prototype.hours"><span class="c-method">.hours</span> <span class="c-comment">//获取或设置小时</span></a></li>
+                            <li><a href="#Date.prototype.minutes"><span class="c-method">.minutes</span> <span class="c-comment">//获取或设置分钟</span></a></li>
+                            <li><a href="#Date.prototype.seconds"><span class="c-method">.seconds</span> <span class="c-comment">//获取或设置秒</span></a></li>
+                            <li><a href="#Date.prototype.milliseconds"><span class="c-method">.milliseconds</span> <span class="c-comment">//获取或设置毫秒</span></a></li>
+                            <li><a href="#Date.prototype.time"><span class="c-method">.time</span> <span class="c-comment">//获取或设置毫秒</span></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -149,10 +148,11 @@
             <li>
                 <a href="#"><span class="c-obj">Number</span></a>
                 <ul>
-                    <li><a href="#"><span class="c-method">.random</span> <span class="c-comment">//随机返回某区间的一个数字</span></a></li>
+                    <li><a href="#Number.random"><span class="c-method">.random</span> <span class="c-comment">//随机返回某区间的一个数字</span></a></li>
                     <li>
                         <a href="#"><span class="c-prototype">.prototype</span></a>
                         <ul>
+                            <li><a href="#Number.prototype.fixed"><span class="c-method">.fixed</span> <span class="c-comment">//修复小数运算精度问题</span></a></li>
                             <li><a href="#Number.prototype.add"><span class="c-method">.add</span> <span class="c-comment">//加，修复小数运算精度问题</span></a></li>
                             <li><a href="#Number.prototype.subtrack"><span class="c-method">.subtrack</span> <span class="c-comment">//减，修复小数运算精度问题</span></a></li>
                             <li><a href="#Number.prototype.multiply"><span class="c-method">.multiply</span> <span class="c-comment">// 乘，修复小数运算精度问题</span></a></li>
@@ -161,7 +161,6 @@
                             <li><a href="#Number.prototype['-']"><span class="c-method">['-']</span> <span class="c-comment">//.subtrack</span></a></li>
                             <li><a href="#Number.prototype['*']"><span class="c-method">['*']</span> <span class="c-comment">//.multiply</span></a></li>
                             <li><a href="#Number.prototype['/']"><span class="c-method">['/']</span> <span class="c-comment">//.divide</span></a></li>
-                            <li><a href="#Number.prototype.fixed"><span class="c-method">.fixed</span> <span class="c-comment">//修复小数运算精度问题</span></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -169,28 +168,19 @@
             <li>
                 <a href="#"><span class="c-obj">String</span></a>
                 <ul>
-                    <li><a href="#"><span class="c-method">.trim</span> <span class="c-comment">// --?</span></a></li>
-                    <li><a href="#"><span class="c-method">.tpl</span></a></li>
+                    <!-- <li><a href="#"><span class="c-method">.tpl</span></a></li> -->
                     <li>
                         <a href="#"><span class="c-prototype">.prototype</span></a>
                         <ul>
-                            <li><a href="#"><span class="c-method">.trim</span> <span class="c-comment">//[es]</span></a></li>
-                            <li><a href="#"><span class="c-method">.toCamelCase</span> <span class="c-comment">//转驼峰命名</span></a></li>
-                            <li><a href="#"><span class="c-method">.toPascalCase</span> <span class="c-comment">//转帕斯卡命名</span></a></li>
-                            <li><a href="#"><span class="c-method">.toUnderscoreCase</span> <span class="c-comment">//转下划线命名</span></a></li>
-                            <li><a href="#"><span class="c-method">.toKebabCase</span> <span class="c-comment">//转中划线命名</span></a></li>
-                            <li><a href="#"><span class="c-method">.toString</span> <span class="c-comment">//转字符串</span></a></li>
-                            <li><a href="#"><span class="c-method">.toBoolean</span> <span class="c-comment">//转布尔</span></a></li>
-                            <li><a href="#"><span class="c-method">.toArray</span> <span class="c-comment">//转数组</span></a></li>
-                            <li><a href="#"><span class="c-method">.toDate</span> <span class="c-comment">//转日期</span></a></li>
-                            <li><a href="#"><span class="c-method">.toNumber</span> <span class="c-comment">//转数字</span></a></li>
-                            <li><a href="#"><span class="c-method">.parseInt</span> <span class="c-comment">//取整</span></a></li>
-                            <li><a href="#"><span class="c-method">.toInt</span> <span class="c-comment">//.parseInt</span></a></li>
-                            <li><a href="#"><span class="c-method">.toJson</span> <span class="c-comment">//转json</span></a></li>
-                            <li><a href="#"><span class="c-method">.toCsv</span> <span class="c-comment">//转csv</span></a></li>
-                            <li><a href="#"><span class="c-method">.csv2json</span> <span class="c-comment">//csv转json</span></a></li>
-                            <li><a href="#"><span class="c-method">.json2csv</span> <span class="c-comment">//json转csv</span></a></li>
-                            <li><a href="#"><span class="c-method">.tpl</span> <span class="c-comment">//模板引擎</span></a></li>
+                            <li><a href="#String.prototype.trim"><span class="c-method">.trim</span> <span class="c-comment">//[es]</span></a></li>
+                            <!-- <li><a href="#"><span class="c-method">.toCamelCase</span> <span class="c-comment">//转驼峰命名</span></a></li> -->
+                            <!-- <li><a href="#"><span class="c-method">.toPascalCase</span> <span class="c-comment">//转帕斯卡命名</span></a></li> -->
+                            <!-- <li><a href="#"><span class="c-method">.toUnderscoreCase</span> <span class="c-comment">//转下划线命名</span></a></li> -->
+                            <!-- <li><a href="#"><span class="c-method">.toKebabCase</span> <span class="c-comment">//转中划线命名</span></a></li> -->
+                            <!-- <li><a href="#"><span class="c-method">.toCsv</span> <span class="c-comment">//转csv</span></a></li> -->
+                            <!-- <li><a href="#"><span class="c-method">.csv2json</span> <span class="c-comment">//csv转json</span></a></li> -->
+                            <!-- <li><a href="#"><span class="c-method">.json2csv</span> <span class="c-comment">//json转csv</span></a></li> -->
+                            <!-- <li><a href="#"><span class="c-method">.tpl</span> <span class="c-comment">//模板引擎</span></a></li> -->
                         </ul>
                     </li>
                 </ul>
@@ -201,15 +191,6 @@
                     <li>
                         <a href="#"><span class="c-prototype">.prototype</span></a>
                         <ul>
-                            <li><a href="#"><span class="c-method">.toString</span> <span class="c-comment">//转字符串</span></a></li>
-                            <li><a href="#"><span class="c-method">.toBoolean</span> <span class="c-comment">//转布尔</span></a></li>
-                            <li><a href="#"><span class="c-method">.toArray</span> <span class="c-comment">//转数组</span></a></li>
-                            <li><a href="#"><span class="c-method">.toDate</span> <span class="c-comment">//转日期</span></a></li>
-                            <li><a href="#"><span class="c-method">.toNumber</span> <span class="c-comment">//转数字</span></a></li>
-                            <li><a href="#"><span class="c-method">.parseInt</span> <span class="c-comment">//取整</span></a></li>
-                            <li><a href="#"><span class="c-method">.toInt</span> <span class="c-comment">//.parseInt</span></a></li>
-                            <li><a href="#"><span class="c-method">.toJson</span> <span class="c-comment">//转json</span></a></li>
-                            <li><a href="#"><span class="c-method">.toCsv</span> <span class="c-comment">//转csv</span></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -220,9 +201,9 @@
                     <li>
                         <a href="#"><span class="c-prototype">.prototype</span></a>
                         <ul>
-                            <li><a href="#"><span class="c-method">.bind</span> <span class="c-comment">//[es]</span></a></li>
-                            <li><a href="#"><span class="c-method">.delay</span> <span class="c-comment">//延时执行</span></a></li>
-                            <li><a href="#"><span class="c-method">.debounce</span> <span class="c-comment">//防重复</span></a></li>
+                            <li><a href="#Function.prototype.bind"><span class="c-method">.bind</span> <span class="c-comment">//[es]</span></a></li>
+                            <li><a href="#Function.prototype.delay"><span class="c-method">.delay</span> <span class="c-comment">//延时执行</span></a></li>
+                            <li><a href="#Function.prototype.debounce"><span class="c-method">.debounce</span> <span class="c-comment">//防重复</span></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -304,19 +285,19 @@ list.get({id:1}).name
                 <h3>
                     小数运算精度修复
                 </h3>
-                <p>add ['+'], subtrack ['-'], multiply ['*'], divide ['/'], fixed</p>
+                <p>精确度为小数后面10位，可以满足绝大部分情况</p>
                 <pre>
                     <code>
 0.1 + 0.2; //=> 0.30000000000000004
 
-(0.1)['+'](0.2); //=> 0.3
+(0.1 + 0.2).fixed()
                     </code>
                 </pre>
                 <pre>
                     <code>
-0.5025 * 100; //=> 50.24999999999999
+0.5025 * (200 / 2); //=> 50.24999999999999
 
-(0.5025 * 100).fixed()
+(0.5025 * (200 / 2)).fixed()
                     </code>
                 </pre>
                 <h3>
@@ -371,11 +352,9 @@ location.params
                 <hr>
             </div>
             <div>
-                <h3 id="Object.getType">Object.getType(value)</h3>
+                <h3 id="*.getType">*.getType()</h3>
                 <p>
                     返回：
-                    <code>"undefined"</code>
-                    <code>"null"</code>
                     <code>"string"</code>
                     <code>"number"</code>
                     <code>"boolean"</code>
@@ -388,43 +367,19 @@ location.params
                 </p>
                 <pre>
                     <code>
-Object.getType([])
+[].getType()
                     </code>
                 </pre>
-                <h3 id="Object.isType">Object.isType(type, value)</h3>
+                <h3 id="*.is[Type]">*.is[Type]()</h3>
                 <pre>
                     <code>
-Object.isType('array', [])
+new Date().isDate()
                     </code>
                 </pre>
-                <p>或</p>
+                <h3 id="*.to[Type]">*.to[Type]()</h3>
                 <pre>
                     <code>
-Object.isArray([])
-                    </code>
-                </pre>
-                <p>或</p>
-                <pre>
-                    <code>
-[].isArray()
-                    </code>
-                </pre>
-                <h3 id="Object.assign">Object.assign(args...)</h3>
-                <pre>
-                    <code>
-Object.assign({a:1, b:1}, {b:2, c:3})
-                    </code>
-                </pre>
-                <h3 id="Object.keys">Object.keys(obj)</h3>
-                <pre>
-                    <code>
-Object.keys({id:1, name:'wsf'})
-                    </code>
-                </pre>
-                <h3 id="Object.values">Object.values(obj)</h3>
-                <pre>
-                    <code>
-Object.values({id:1, name:'wsf'})
+'2008-08-08'.toDate()
                     </code>
                 </pre>
                 <h3 id="Object.isEmpty">Object.isEmpty(value)</h3>
@@ -443,6 +398,24 @@ Object.values({id:1, name:'wsf'})
                     <code>
 var data = {}
 Object.isEmpty(data.list)
+                    </code>
+                </pre>
+                <h3 id="Object.assign">Object.assign(args...)</h3>
+                <pre>
+                    <code>
+Object.assign({a:1, b:1}, {b:2, c:3})
+                    </code>
+                </pre>
+                <h3 id="Object.keys">Object.keys(obj)</h3>
+                <pre>
+                    <code>
+Object.keys({id:1, name:'wsf'})
+                    </code>
+                </pre>
+                <h3 id="Object.values">Object.values(obj)</h3>
+                <pre>
+                    <code>
+Object.values({id:1, name:'wsf'})
                     </code>
                 </pre>
                 <h3 id="Object.copy">Object.copy(value, [max=1000])</h3>
@@ -944,6 +917,8 @@ list.xor([
 ])
                     </code>
                 </pre>
+                <h3 id="Array.prototype.remove">Array.prototype.remove</h3>
+                <p>delete 别名</p>
                 <h3 id="Array.prototype.removeIndex">Array.prototype.removeIndex</h3>
                 <pre>
                     <code>
@@ -1057,6 +1032,12 @@ list.shuffle()
                 <pre>
                     <code>
 ['一等奖', '二等奖', '三等奖'].random()
+                    </code>
+                </pre>
+                <h3 id="Array.prototype.toJson">Array.prototype.toJson</h3>
+                <pre>
+                    <code>
+[{id:1},{id:2}].toJson()
                     </code>
                 </pre>
                 <h3 id="Array.prototype.toMap">Array.prototype.toMap</h3>
@@ -1280,6 +1261,17 @@ Number.random(1,5)
 Number.random(1,5, true)
                     </code>
                 </pre>
+                <h3 id="Number.prototype.fixed">Number.prototype.fixed</h3>
+                <pre>
+                    <code>
+0.5025 * 100
+                    </code>
+                </pre>
+                <pre>
+                    <code>
+(0.5025*100).fixed()
+                    </code>
+                </pre>
                 <h3 id="Number.prototype.add">Number.prototype.add</h3>
                 <pre>
                     <code>
@@ -1368,15 +1360,50 @@ Number.random(1,5, true)
 (0.3)['/'](0.1)
                     </code>
                 </pre>
-                <h3 id="Number.prototype.fixed">Number.prototype.fixed</h3>
+                <h3 id="String.prototype.trim">String.prototype.trim</h3>
                 <pre>
                     <code>
-0.5025 * 100
+' str  '.trim()
                     </code>
                 </pre>
+                <h3 id="Function.prototype.bind">Function.prototype.bind</h3>
                 <pre>
                     <code>
-(0.5025*100).fixed()
+var f = function(){
+    return this
+}.bind({k:1})
+
+f.call({k:2})
+                    </code>
+                </pre>
+                <h3 id="Function.prototype.delay">Function.prototype.delay</h3>
+                <pre>
+                    <code>
+var f = function(){
+    // ...
+}.delay(1000)
+
+                    </code>
+                </pre>
+                <h3 id="Function.prototype.debounce">Function.prototype.debounce</h3>
+                <pre>
+                    <code>
+var f = function(){
+    // ...
+}.debounce(500)
+
+                    </code>
+                </pre>
+                <h3 id="JSON.parse">JSON.parse</h3>
+                <pre>
+                    <code>
+JSON.parse('[{id:1},{id:2}]')
+                    </code>
+                </pre>
+                <h3 id="JSON.parse">JSON.stringify</h3>
+                <pre>
+                    <code>
+JSON.stringify([{id:1},{id:2}], null, '   ')
                     </code>
                 </pre>
                 <!--  -->
@@ -1404,7 +1431,7 @@ RegExp.han.test('中')
             var js = codeEl.innerHTML;
             var result = eval(js);
             if (Object.isType('date', result)) {
-                result = '[Date] '+ result.format('yyyy-MM-dd HH:mm:ss.SSS')
+                result = '[Date] '+ result
             }
             if (Object.isString(result)) {
                 outputEl.innerHTML = "'"+result+"'"
