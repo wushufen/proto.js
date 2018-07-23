@@ -121,4 +121,4 @@ test(220.2342, '-', 20.2323)
 
 // console.log((0.5025*100).fixed())
 // console.log((220.2342 - 20.2323).fixed())
-console.log(23413241.1.toWY())
+// console.log(23413241.1.toWY())
