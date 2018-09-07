@@ -1,4 +1,3 @@
-/**
- * https://github.com/wusfen/proto.js
- * proto.js 是一个js增强库，提供许多实用的链式方法，使数据操作更加便捷
+/*! @preserve https://github.com/wusfen/proto.js
+ *  proto.js 是一个js增强库，提供许多实用的链式方法，使数据操作更加便捷
  */

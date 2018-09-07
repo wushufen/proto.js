@@ -23,8 +23,9 @@ gulp.task('js', function() {
 
     gulp.src('src/{license,{type,String,Number,Boolean,Date,Object,Array,Function,RegExp,JSON,location}.js}')
         .pipe(uglify({
+            // preserveComments: 'license'
             output: {
-                comments: /@author/,
+                comments: 'some'
             }
         }))
         .pipe(concat('proto.js'))

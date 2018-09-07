@@ -46,7 +46,11 @@
                     return isFinite(obj) ? String(obj) : 'null'
                 }
                 if (type == 'string') {
-                    return '"' + obj.replace(/"/g, '\\"') + '"' // 转义
+                    return '"' + obj // 转义
+                        .replace(/\\/g, '\\\\')
+                        .replace(/\n/g, '\\n')
+                        .replace(/"/g, '\\"')
+                        + '"'
                 }
 
                 if (obj && typeof(obj.toJSON) == 'function') {
