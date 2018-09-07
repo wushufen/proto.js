@@ -16,6 +16,7 @@
             value == 'false' ? false :
             value == 'null' ? null :
             value == 'undefined' ? undefined :
+            value === '' ? '' :
             !isNaN(+value) ? +value :
             value
     }
