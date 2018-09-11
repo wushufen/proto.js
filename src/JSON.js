@@ -5,11 +5,15 @@
  */
 
 !(function(global) {
-    // if (global.JSON) return
+    if (global.JSON) return
+
+    var typeOf = function(value){
+        return Object.prototype.toString.call(value).slice(8, -1).toLowerCase()
+    }
 
     global.JSON = {
         parse: function(json) {
-            // 安全校验，如在 "..." 外有 () = ，则可能有恶意执行代码
+            // 简单安全校验，如在 "..." 外有 () = ，则可能有恶意执行代码
             var left = String(json).replace(/"(\\.|.)*?"/g, '') // "str\"ing" --
             if (left.match(/\(|=/)) {
                 throw 'parse match "(..)" or "="'
@@ -17,55 +21,62 @@
 
             return global.eval('(' + json + ')') // 直接写 eval 会影响 uglify 压缩
         },
-        stringify: function(obj, replacer, space) {
-            if (typeof(space) == 'number') {
+        stringify: function(value, replacer, space) {
+            // space
+            if (typeOf(space) == 'number') {
                 space = Array(space + 1).join(' ')
             }
             space = space ? space : ''
 
-            return (function stringify(key, obj, deep) {
+            // loop
+            return (function handler(key, value, deep) {
                 deep = deep || 0
                 if (deep > 10) {
                     // return '...'
                 }
 
-                // 过滤转换器
-                if (typeof(replacer) == 'function') {
-                    obj = replacer(key, obj)
-                    if (obj === undefined) {
-                        return
-                    }
+                // replacer
+                if (typeOf(replacer) == 'function') {
+                    value = replacer(key, value)
                 }
-
-                // 
-                var type = typeof obj
-                if (obj === null || type == 'boolean') {
-                    return String(obj)
+                if (typeOf(value) == 'undefined') {
+                    return undefined
                 }
-                if (type == 'number') {
-                    return isFinite(obj) ? String(obj) : 'null'
+                if (typeOf(value) == 'null') {
+                    return 'null'
                 }
-                if (type == 'string') {
-                    return '"' + obj // 转义
+                if (typeOf(value) == 'boolean') {
+                    return String(value)
+                }
+                if (typeOf(value) == 'number') {
+                    return isFinite(value) ? String(value) : 'null'
+                }
+                // string \\\\
+                if (typeOf(value) == 'string') {
+                    return '"' + value
                         .replace(/\\/g, '\\\\')
                         .replace(/\n/g, '\\n')
                         .replace(/"/g, '\\"')
                         + '"'
                 }
-
-                if (obj && typeof(obj.toJSON) == 'function') {
-                    return stringify(key, obj.toJSON(), deep + 1) // date.toJSON
+                // .toJSON
+                if (value && typeOf(value.toJSON) == 'function') {
+                    return handler(key, value.toJSON(), deep + 1)
                 }
 
+                // indent
                 var brSpacePop = space ? '\n' + Array(deep + 1).join(space) : '' // 2 换行缩进跳上一级
                 var brSpace = space ? brSpacePop + space : '' // 1 换行缩进
 
-                if (obj instanceof Array) {
+                // array
+                if (typeOf(value) == 'array') {
                     var arr = []
-                    for (var i = 0; i < obj.length; i++) {
-                        var s = stringify(i, obj[i], deep + 1)
-                        s = s ? s : 'null' //转 null
-                        arr.push(s)
+                    for (var i = 0; i < value.length; i++) {
+                        var item = handler(i, value[i], deep + 1)
+                        if (typeOf(item) == 'undefined') {
+                            item = 'null'
+                        }
+                        arr.push(item)
                     }
                     return '[' +
                         (arr.length ? // 没子元素则不换行缩进
@@ -75,15 +86,21 @@
                         ) +
                         ']'
                 }
-                if (type == 'object') {
+                // object
+                if (typeof value == 'object') {
+                    // `"key": value`
                     var arr = []
-                    for (var key in obj) {
-                        var s = stringify(key, obj[key], deep + 1)
+                    for (var key in value) {
+                        var item = handler(key, value[key], deep + 1)
                         // replacer [keys]
-                        if (replacer instanceof Array) {
-                            replacer.indexOf(key) != -1 && arr.push('"' + key + '":' + s)
+                        if (typeOf(replacer) == 'array') {
+                            if (replacer.indexOf(key) != -1) {
+                                arr.push('"' + key + '":' + item)
+                            }
                         } else {
-                            s && arr.push('"' + key + '":' + s) // && 忽略
+                            if (typeOf(item) != 'undefined') {
+                                arr.push('"' + key + '":' + item)
+                            }
                         }
                     }
                     return '{' +
@@ -94,32 +111,37 @@
                         ) +
                         '}'
                 }
-            })('""', obj)
+            })('""', value)
         }
     }
 
 })(Function('return this')())
 
 
-/*
+
 console.log(
     // JSON.parse('{"x":alert()}'),
-    // JSON.parse(
+    JSON.parse(
     JSON.stringify({
         un: undefined,
         nu: null,
-        s: 'string',
+        s: "string\"a\nb\\c",
+        S: new String('S'),
         n: 1,
+        N: new Number(0),
         b: true,
+        B: new Boolean(false),
         o: { n: 1 },
         e: {},
         a: [undefined, null, 'string', 1, true, { n: 1 }, [], Function, new Date, /reg/ ],
         f: function() {},
         d: new Date,
         r: /reg/,
+        sb: Symbol(''),
+        set: new Set([1])
     }, null, 4)
-    // )
-)*/
+    )
+)
 
 // console.log(global)
 // console.log(this)
