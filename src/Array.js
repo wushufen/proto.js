@@ -8,70 +8,73 @@
 
     Array.range = function(start, end, step) {
         if (end == undefined) {
-            end = start;
-            start = 0;
+            end = start
+            start = 0
         }
-        step = step || 1;
-        var arr = [];
+        step = step || 1
+        var arr = []
         for (var i = 0; true; i++) {
-            var item = start + i * step;
+            var item = start + i * step
             if (item >= end) {
                 break
             }
             arr[i] = item
         }
         return arr
-    };
+    }
 
-    var hasWarnForIn = false;
+    var hasWarnForIn = false
     Object.defineProperty && Object.defineProperty(Array.prototype, '__noforin__', {
         configurable: true,
         enumerable: true,
         get: function() {
             if (!hasWarnForIn) {
-                hasWarnForIn = true;
+                hasWarnForIn = true
                 console.trace('勿用 for...in 遍历数组')
             }
             return '__noforin__'
         },
         set: function() {}
-    });
+    })
 
     var polyfill = {
         forEach: function(fn, thisArg) {
             for (var i = 0, length = this.length; i < length && i < this.length; i++) {
-                fn.call(thisArg, this[i], i, this);
+                fn.call(thisArg, this[i], i, this)
             }
         },
         map: function(fn, thisArg) {
-            var arr = [];
-            this.forEach(function(item) {
-                arr.push(fn.apply(thisArg, arguments));
-            });
+            var arr = []
+            // this.forEach(function(item) {
+            //     arr.push(fn.apply(thisArg, arguments))
+            // })
+            polyfill.forEach.call(this, function(item) { // 不用this，考虑到可能会类数组通过 call,apply 调用
+                arr.push(fn.apply(thisArg, arguments))
+            })
             return arr
         },
-        fliter: function(fn, thisArg) {
-            var arr = [];
-            this.forEach(function(item) {
-                fn.apply(thisArg, arguments) && arr.push(item);
-            });
+        filter: function(fn, thisArg) {
+            var arr = []
+            polyfill.forEach.call(this, function(item) {
+                fn.apply(thisArg, arguments) && arr.push(item)
+            })
             return arr
         },
         indexOf: function(item, fromIndex) {
-            var start = fromIndex || 0;
-            start = start < 0 ? this.length + start : start;
-            var end = this.length - 1;
+            var start = fromIndex || 0
+            start = start < 0 ? this.length + start : start
+            var end = this.length - 1
             for (var i = start; i <= end; i++) {
                 if (this[i] === item) {
-                    return i;
+                    return i
                 }
             }
             return -1
         },
         lastIndexOf: function(item, fromIndex) {
-            var start = 0;
-            var end = fromIndex || this.length - 1;
-            end = end < 0 ? this.length + end : end;
+            var start = 0
+            var end = fromIndex || this.length - 1
+            end = end < 0 ? this.length + end : end
             for (var i = end; i >= start; i--) {
                 if (this[i] === item) {
                     return i
@@ -82,7 +85,7 @@
         includes: function(item, fromIndex) {
             return this.indexOf(item, fromIndex) != -1
         }
-    };
+    }
 
     for (var key in polyfill) {
         // if (!prototype[key]) {
@@ -90,18 +93,18 @@
         // }
     }
 
-    function getType(obj) {
+    function typeOf(obj) {
         return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
-    };
+    }
 
     // 'a<'.isMatch(/(.*?)(>|>=|<|<=|==|===)$/)
     function isMatch(obj, _obj, compare, deep) {
         // console.log(obj, _obj, deep, compare)
 
-        deep = deep || 0;
+        deep = deep || 0
         // console.log('deep', deep)
         if (deep > 10) {
-            return false;
+            return false
         }
 
         // compare
@@ -110,26 +113,26 @@
         if (compare) {
             switch (compare) {
                 case '==':
-                    return obj == _obj;
+                    return obj == _obj
                 case '===':
-                    return obj === _obj;
+                    return obj === _obj
                 case '!=':
-                    return obj != _obj;
+                    return obj != _obj
                 case '!==':
-                    return obj !== _obj;
+                    return obj !== _obj
                 case '>':
-                    return obj > _obj;
+                    return obj > _obj
                 case '>=':
-                    return obj >= _obj;
+                    return obj >= _obj
                 case '<':
-                    return obj < _obj;
+                    return obj < _obj
                 case '<=':
-                    return obj <= _obj;
+                    return obj <= _obj
             }
         }
 
         // reg
-        if (getType(_obj) == 'regexp') {
+        if (typeOf(_obj) == 'regexp') {
             return _obj.test(obj)
         }
 
@@ -143,7 +146,7 @@
             return String(obj) === String(_obj)
         }
         // [..] [..]
-        if (getType(obj) == 'array' && getType(_obj) == 'array') {
+        if (typeOf(obj) == 'array' && typeOf(_obj) == 'array') {
             // console.log('eq: []')
             if (obj.length != _obj.length) {
                 return false
@@ -156,20 +159,20 @@
             return true
         }
         // {id:1,name:'wsf'} {id:1,age:18} 共同字段相等则视为相等
-        if (getType(obj) == 'object' && getType(_obj) == 'object') {
+        if (typeOf(obj) == 'object' && typeOf(_obj) == 'object') {
             // console.log('eq: {}')
             if (!Object.keys(obj).length && !Object.keys(_obj).length) {
                 return true
             }
-            var eq = false;
+            var eq = false
             for (var _key in _obj) {
-                var key_compare = _key.match(/(.+?)\s*(===|!==|==|!=|>=|>|<=|<)?\s*$/) || [];
-                var compare = key_compare[2];
-                var key = key_compare[1];
+                var key_compare = _key.match(/(.+?)\s*(===|!==|==|!=|>=|>|<=|<)?\s*$/) || []
+                var compare = key_compare[2]
+                var key = key_compare[1]
                 // console.log('key_compare', key_compare, key, compare)
 
                 if (key in obj) {
-                    eq = true;
+                    eq = true
                     if (!isMatch(obj[key], _obj[_key], compare, deep + 1)) {
                         return false
                     }
@@ -179,8 +182,8 @@
         }
         return false
     }
-    Array.isMatch = isMatch;
-    Object.isMatch = isMatch;
+    Array.isMatch = isMatch
+    Object.isMatch = isMatch
     // console.log(isMatch([{a:1}], [{a:1}]))
     // console.log(isMatch({a:1},{}))
     // console.log(isMatch('str','str'))
@@ -196,14 +199,14 @@
     function getArguments(list, start) {
         start = start || 0
         var first = list[start || 0]
-        if (list.length == start + 1 && getType(first) == 'array' && first.length) { // ([1,2])
+        if (list.length == start + 1 && typeOf(first) == 'array' && first.length) { // ([1,2])
             return first
         } else { // () (1) (1,2) ([])
-            var arr = [];
-            var li = list.length;
-            var ai;
+            var arr = []
+            var li = list.length
+            var ai
             while (ai = li - start) {
-                li--, ai--;
+                li--, ai--
                 arr[ai] = list[li]
             }
             return arr
@@ -221,7 +224,7 @@
 
     var extend = {
         each: function(fn, thisArg) {
-            this.forEach.apply(this, arguments);
+            polyfill.forEach.apply(this, arguments)
             return this
         },
         select: function(condition, one) {
@@ -229,11 +232,11 @@
         		return [].concat(this)
         	}
 
-            var arr = [];
+            var arr = []
             for (var i = 0, length = this.length; i < length; i++) {
-                var item = this[i];
+                var item = this[i]
                 if (isMatch(item, condition)) {
-                    arr.push(item);
+                    arr.push(item)
                     if (one) {
                         break
                     }
@@ -246,7 +249,7 @@
         },
         getIndex: function(condition) {
             for (var i = 0, length = this.length; i < length; i++) {
-                var item = this[i];
+                var item = this[i]
                 if (isMatch(item, condition)) {
                     return i
                 }
@@ -254,36 +257,36 @@
             return -1
         },
         has: function(args) {
-            var list = getArguments(arguments);
+            var list = getArguments(arguments)
 
-            var isFind = true;
+            var isFind = true
             for (var i = 0; i < list.length; i++) {
-                var item = list[i];
+                var item = list[i]
                 if (!this.select(item).length) {
-                    isFind = false;
+                    isFind = false
                     break
                 }
             }
             return isFind
         },
         insert: function(args) {
-            var list = getArguments(arguments);
+            var list = getArguments(arguments)
 
             return this.push.apply(this, list), this
         },
         insertIndex: function(index, args) {
-            var list = getArguments(arguments, 1);
+            var list = getArguments(arguments, 1)
             if (index < 0) { // splice -1 代表倒数第1之前
                 index = this.realIndex(index) + 1
             }
 
-            this.splice.apply(this, [index, 0].concat(list));
+            this.splice.apply(this, [index, 0].concat(list))
             return this
         },
         ensure: function(list) {
-            list = Array.isArray(list) ? list : [list];
+            list = Array.isArray(list) ? list : [list]
             for (var i = 0; i < list.length; i++) {
-                var item = list[i];
+                var item = list[i]
                 if (!this.has(item)) {
                     this.push(item)
                 }
@@ -292,15 +295,15 @@
         },
         update: function(condition, map) {
             if (!map) {
-                map = condition;
-                var isAll = true;
+                map = condition
+                var isAll = true
             }
             for (var i = 0, length = this.length; i < length; i++) {
-                var item = this[i];
+                var item = this[i]
                 if (isAll || isMatch(item, condition)) {
-                    if (getType(item) == 'object' && getType(map) == 'object') {
+                    if (typeOf(item) == 'object' && typeOf(map) == 'object') {
                         for (var key in map) {
-                            if (!map.hasOwnProperty(key)) continue;
+                            if (!map.hasOwnProperty(key)) continue
                             item[key] = map[key]
                         }
                     } else {
@@ -311,10 +314,10 @@
             return this
         },
         updateIndex: function(index, map) {
-            index = this.realIndex(index);
-            var item = this.nth(index);
+            index = this.realIndex(index)
+            var item = this.nth(index)
 
-            if (getType(item) == 'object' && getType(map) == 'object') {
+            if (typeOf(item) == 'object' && typeOf(map) == 'object') {
                 for (var key in map) {
                     item[key] = map[key]
                 }
@@ -328,15 +331,15 @@
                 return this.empty()
             }
 
-            var list = getArguments(arguments);
+            var list = getArguments(arguments)
 
             for (var i = 0, length = this.length; i < length; i++) {
-                var item = this[i];
+                var item = this[i]
                 for (var j = 0; j < list.length; j++) {
-                    var _item = list[j];
+                    var _item = list[j]
                     if (isMatch(item, _item)) {
-                        this.splice(i, 1);
-                        i--, length--;
+                        this.splice(i, 1)
+                        i--, length--
                     }
                 }
             }
@@ -351,20 +354,20 @@
         orderBy: function(field, desc) {
             // number 'number' 'string' obj
             return this.sort(function(a, b) {
-                a = field ? a[field] : a;
-                b = field ? b[field] : b;
+                a = field ? a[field] : a
+                b = field ? b[field] : b
                 return desc ?
                     (a < b ? 1 : (a == b ? 0 : -1)) :
                     (a > b ? 1 : (a == b ? 0 : -1))
             })
         },
         groupBy: function(field) {
-            var map = {};
+            var map = {}
             for (var i = 0; i < this.length; i++) {
-                var item = this[i];
-                var value = item[field];
-                var arr = map[value] || (map[value] = []);
-                arr.push(item);
+                var item = this[i]
+                var value = item[field]
+                var arr = map[value] || (map[value] = [])
+                arr.push(item)
             }
             return map
         },
@@ -372,21 +375,21 @@
             return Object.keys(this.groupBy(field)).length
         },
         fields: function() {
-            var map = {};
+            var map = {}
             for (var i = 0; i < 50; i++) {
                 if (i > this.length - 1) {
                     break
                 }
-                var index = i < 40 ? i : parseInt(Math.random() * (this.length - 40)) + 40;
-                var item = this[index];
+                var index = i < 40 ? i : parseInt(Math.random() * (this.length - 40)) + 40
+                var item = this[index]
                 // console.log(this.length, index, ':', item)
                 for (var key in item) {
                     if (item.hasOwnProperty(key)) {
-                        map[key] = 1;
+                        map[key] = 1
                     }
                 }
             }
-            return Object.keys(map);
+            return Object.keys(map)
         },
         column: function(field) {
             return this.map(function(item) {
@@ -394,14 +397,14 @@
             })
         },
         page: function(pageIndex, pageSize) {
-            pageSize = pageSize || 10;
-            var start = (pageIndex - 1) * pageSize;
+            pageSize = pageSize || 10
+            var start = (pageIndex - 1) * pageSize
             if (pageIndex < 0) {
                 start = pageIndex * pageSize
             }
-            var end = start + pageSize;
+            var end = start + pageSize
             if (pageIndex == -1) {
-                end = undefined;
+                end = undefined
             }
             return this.slice(start, end)
         },
@@ -440,7 +443,7 @@
             }
         },
         unique: function() {
-            var length = this.length;
+            var length = this.length
             for (var i = 0; i < length; i++) {
                 for (var j = i + 1; j < length; j++) {
                     if (isMatch(this[i], this[j])) {
@@ -454,9 +457,9 @@
             return this.length == list.length && this.has(list) && list.has(this)
         },
         same: function(list) {
-            var arr = [];
+            var arr = []
             for (var i = 0, length = this.length; i < length; i++) {
-                var item = list[i];
+                var item = list[i]
                 if (this.has(item)) {
                     arr.push(item)
                 }
@@ -469,12 +472,12 @@
         },
         max: function(field) {
             if (arguments.length) {
-                var max = this[0];
+                var max = this[0]
                 this.each(function(item) {
                     if (item[field] > max[field]) {
-                        max = item;
+                        max = item
                     }
-                });
+                })
                 return max
             } else {
                 return Math.max.apply(Math, field ? this.column(field) : this)
@@ -482,22 +485,22 @@
         },
         min: function(field) {
             if (arguments.length) {
-                var min = this[0];
+                var min = this[0]
                 this.each(function(item) {
                     if (item[field] < min[field]) {
-                        min = item;
+                        min = item
                     }
-                });
+                })
                 return min
             } else {
                 return Math.min.apply(Math, field ? this.column(field) : this)
             }
         },
         sum: function(field) {
-            var list = field ? this.column(field) : this;
-            var sum = 0;
+            var list = field ? this.column(field) : this
+            var sum = 0
             for (var i = 0, length = this.length; i < length; i++) {
-                var item = list[i];
+                var item = list[i]
                 if (!isNaN(item)) {
                     sum += +item
                 }
@@ -519,41 +522,41 @@
             })
         },
         random: function(start, end) {
-            start = start || 0;
-            end = end || this.length - 1;
-            var index = parseInt(Math.random() * (end - start + 1) + start);
+            start = start || 0
+            end = end || this.length - 1
+            var index = parseInt(Math.random() * (end - start + 1) + start)
             return this[index]
         },
         toMap: function(field) {
-            var map = {};
+            var map = {}
             for (var i = 0, length = this.length; i < length; i++) {
-                var item = this[i];
-                var value = item[field];
-                map[value] = item;
+                var item = this[i]
+                var value = item[field]
+                map[value] = item
             }
             return map
         },
         key: function(path) {
-            var obj = this[0];
+            var obj = this[0]
             return obj ? obj[path] : undefined
         }
-    };
+    }
 
-    extend.where = extend.select;
+    extend.where = extend.select
 
-    extend['delete'] = extend.remove;
-    extend.del = extend.remove;
-    extend.difference = extend.remove;
-    extend.without = extend.remove;
+    extend['delete'] = extend.remove
+    extend.del = extend.remove
+    extend.difference = extend.remove
+    extend.without = extend.remove
 
-    extend.deleteIndex = extend.removeIndex;
-    extend.delIndex = extend.removeIndex;
+    extend.deleteIndex = extend.removeIndex
+    extend.delIndex = extend.removeIndex
 
-    extend.col = extend.column;
-    extend.contains = extend.has;
-    extend.add = extend.insert;
-    extend.union = extend.ensure;
-    extend.uniq = extend.unique;
+    extend.col = extend.column
+    extend.contains = extend.has
+    extend.add = extend.insert
+    extend.union = extend.ensure
+    extend.uniq = extend.unique
 
     for (var key in extend) {
         prototype[key] = extend[key]
@@ -571,13 +574,13 @@
 //     {},
 //     { id: 1, name: 'wsf' },
 //     { id: 2, name: 'wsf2' },
-// ];
+// ]
 
 // isMatch test
 // for (var i = 0; i < list.length; i++) {
-//     var item = list[i];
+//     var item = list[i]
 //     for (var j = 0; j < list.length; j++) {
-//         var _item = list[j];
+//         var _item = list[j]
 //         console.log(typeof item, item, _item, typeof _item, Object.isMatch(item, _item) ? '*********************** match' : '')
 //     }
 // }

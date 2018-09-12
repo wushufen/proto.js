@@ -119,29 +119,29 @@
 
 
 
-console.log(
-    // JSON.parse('{"x":alert()}'),
-    JSON.parse(
-    JSON.stringify({
-        un: undefined,
-        nu: null,
-        s: "string\"a\nb\\c",
-        S: new String('S'),
-        n: 1,
-        N: new Number(0),
-        b: true,
-        B: new Boolean(false),
-        o: { n: 1 },
-        e: {},
-        a: [undefined, null, 'string', 1, true, { n: 1 }, [], Function, new Date, /reg/ ],
-        f: function() {},
-        d: new Date,
-        r: /reg/,
-        sb: Symbol(''),
-        set: new Set([1])
-    }, null, 4)
-    )
-)
+// console.log(
+//     // JSON.parse('{"x":alert()}'),
+//     JSON.parse(
+//     JSON.stringify({
+//         un: undefined,
+//         nu: null,
+//         s: "string\"a\nb\\c",
+//         S: new String('S'),
+//         n: 1,
+//         N: new Number(0),
+//         b: true,
+//         B: new Boolean(false),
+//         o: { n: 1 },
+//         e: {},
+//         a: [undefined, null, 'string', 1, true, { n: 1 }, [], Function, new Date, /reg/ ],
+//         f: function() {},
+//         d: new Date,
+//         r: /reg/,
+//         sb: Symbol(''),
+//         set: new Set([1])
+//     }, null, 4)
+//     )
+// )
 
 // console.log(global)
 // console.log(this)
