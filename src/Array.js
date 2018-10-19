@@ -30,7 +30,9 @@
         get: function() {
             if (!hasWarnForIn) {
                 hasWarnForIn = true
-                console.trace('勿用 for...in 遍历数组')
+                setTimeout(function(){
+                    console.trace('勿用 for...in 遍历数组')
+                },1)
             }
             return '__noforin__'
         },
@@ -199,7 +201,7 @@
     function getArguments(list, start) {
         start = start || 0
         var first = list[start || 0]
-        if (list.length == start + 1 && typeOf(first) == 'array' && first.length) { // ([1,2])
+        if (list.length == start + 1 && typeOf(first) == 'array') { // ([1,2])
             return first
         } else { // () (1) (1,2) ([])
             var arr = []
@@ -212,14 +214,18 @@
             return arr
         }
     }
-    // console.log( getArguments(  [ [1] ]  ) ) //=> [1]
-    // console.log( getArguments(  [ [1,2] ]  ) ) //=> [1,2]
-    // console.log( getArguments(  [ [] ]  ) ) //=> [[]]
-    // console.log( getArguments(  [ 1 ]  ) ) //=> [1]
-    // console.log( getArguments(  [ 1,2 ]  ) ) //=> [1,2]
-    // console.log( getArguments(  [  ]  ) ) //=> []
-    // console.log(getArguments(['x', 1, 2], 1)) //=> [1,2]
-    // console.log(getArguments([-1, 1, 2], 1)) //=> [1,2]
+    // console.log(1, getArguments(  [ ]  ) )           //=> []
+    // console.log(2, getArguments(  [ [] ]  ) )        //=> []
+    // console.log(3, getArguments(  [ [1] ]  ) )       //=> [1]
+    // console.log(4, getArguments(  [ [1,2] ]  ) )     //=> [1,2]
+    // console.log(5, getArguments(  [ 1 ]  ) )         //=> [1]
+    // console.log(6, getArguments(  [ 1,2 ]  ) )       //=> [1,2]
+    // console.log(7, getArguments(  [1], 1 ) )         //=> []
+    // console.log(8, getArguments(  [1, 2], 1 ) )      //=> [2]
+    // console.log(9, getArguments(  [1, 2,3], 1 ) )    //=> [2,3]
+    // console.log(10,getArguments(  [1, []], 1 ) )     //=> []
+    // console.log(11,getArguments(  [1, [2]], 1 ) )    //=> [2]
+    // console.log(12,getArguments(  [1, [2,3]], 1 ) )  //=> [2,3]
 
 
     var extend = {
@@ -599,3 +605,5 @@
 // console.log([0,1,{id:1}].getIndex(1))
 
 // console.log([{ name: 'wsf' }, { name: 'wyb' }].select({ name: /ws/ }))
+
+// console.log([1].add([]))
