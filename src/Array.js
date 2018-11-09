@@ -545,6 +545,9 @@
         key: function(path) {
             var obj = this[0]
             return obj ? obj[path] : undefined
+        },
+        log: function(){
+            console.table(this.copy(true))
         }
     }
 
