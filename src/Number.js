@@ -73,17 +73,27 @@
     /*
     大数用‘万，亿’表示
      */
-    prototype.toWY = function(n) {
+    prototype.toWY = function(n, end0) {
         n = n || 0
-        var value = this
-        for (var i = 0; true; i++) {
-            var v = value / 10000
-            if (v < 1) break
-            value = v
+        var value = +this
+        var nWang = 0
+
+        if (Math.abs(value) < 10000) {
+            return value
         }
-        return (+value.toFixed(n)) +
-            Array(i % 2 + 1).join('万') +
-            Array(parseInt(i / 2) + 1).join('亿')
+
+        while(Math.abs(value) >= 10000){
+            value /= 10000
+            nWang += 1
+        }
+
+        value = value.toFixed(n)
+        value = end0? value: +value
+
+        var rs = value + Array(nWang+1).join('万')
+        rs = rs.split('').reverse().join('').replace(/万万/g, '亿')
+        rs = rs.split('').reverse().join('')
+        return rs
     }
 
 
@@ -121,4 +131,4 @@ test(220.2342, '-', 20.2323)
 
 // console.log((0.5025*100).fixed())
 // console.log((220.2342 - 20.2323).fixed())
-// console.log(23413241.1.toWY())
+// console.log((10000.66468654).toWY(1))

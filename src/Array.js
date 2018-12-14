@@ -192,12 +192,12 @@
     // console.log(isMatch('',[]))
     // console.log(isMatch(1, 2, null, '>'))
 
-    // ([1]) => [1]
-    // ([1,2]) => [1,2]
-    // ([]) => [[]]
+    // () => []
     // (1) => [1]
     // (1,2) => [1,2]
-    // () => []
+    // ([]) => []
+    // ([1]) => [1]
+    // ([1,2]) => [1,2]
     function getArguments(list, start) {
         start = start || 0
         var first = list[start || 0]
@@ -465,8 +465,8 @@
         same: function(list) {
             var arr = []
             for (var i = 0, length = this.length; i < length; i++) {
-                var item = list[i]
-                if (this.has(item)) {
+                var item = this[i]
+                if (list.has(item)) {
                     arr.push(item)
                 }
             }
