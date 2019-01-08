@@ -46,11 +46,6 @@
         })
     }
 
-    prototype._toString = prototype.toString;
-    prototype.toString = function(pattern) {
-        return pattern ? this.format(pattern) : this._toString()
-    }
-
     /**
      * 是否无效日期
      * 
@@ -59,6 +54,7 @@
     prototype.isInvalid = prototype.isInvalidDate = function() {
         return isNaN(this)
     }
+
     /**
      * 是否有效日期
      * 
@@ -129,6 +125,8 @@
 
     });
 
+    prototype.year = prototype.fullYear = prototype.fullyear
+
     /**
      * date1.diff(date2, 'd天HH时mm分ss秒SSS')
      * 
@@ -190,6 +188,32 @@
     }
 
     /**
+     * [今年第几天]
+     * @return {Date}
+     */
+    prototype.dayOfYear = function () {
+        var date = this
+        var firstDayOfYear = new Date(this.year(), 0, 1)
+        var days = Math.floor( (date - firstDayOfYear) / (24*60*60*1000) ) + 1// +1ms for ceil
+        return days
+    }
+
+    /**
+     * [今年第几周]
+     * @return {Date}
+     */
+    prototype.weekOfYear = function () {
+        var date = this
+        var firstDayOfYear = new Date(this.year(), 0, 1)
+        var offset = firstDayOfYear.date()
+
+        var dayOfYear = this.dayOfYear()
+
+        var weeks = Math.floor( (dayOfYear + offset) / (7) ) + 1
+        return weeks
+    }
+
+    /**
      * [昨天0点]
      * @return {Date}
      */
@@ -208,7 +232,7 @@
     }
 
     /**
-     * [明天天0点]
+     * [明天0点]
      * @return {Date}
      */
     Date.tomorrow = function(d) {
@@ -216,7 +240,16 @@
         return new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1)
     }
 
+    /**
+     * [今天第1天]
+     * @return {Date}
+     */
+    Date.thisYear = function() {
+        return new Date(new Date().year(), 0, 1)
+    }
+
 })(Date, Date.prototype)
 
 // console.log(new Date('xxoo').isValid())
 // console.log(new Date().diff(new Date().hours(2)))
+console.log(new Date('2019/01/06').weekOfYear())
