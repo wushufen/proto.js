@@ -252,4 +252,4 @@
 
 // console.log(new Date('xxoo').isValid())
 // console.log(new Date().diff(new Date().hours(2)))
-console.log(new Date('2019/01/06').weekOfYear())
+// console.log(new Date().weekOfYear())
