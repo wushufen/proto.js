@@ -58,4 +58,4 @@ true
 
 ## DOC
 详见文档  
-https://wusfen.github.io/proto.js
+https://wushufen.github.io/proto.js
